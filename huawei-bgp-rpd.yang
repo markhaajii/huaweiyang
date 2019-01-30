@@ -1,0 +1,640 @@
+/*
+Copyright (C) 2013-2018 Huawei Technologies Co., Ltd. All rights reserved.
+*/
+submodule huawei-bgp-rpd {
+  belongs-to huawei-bgp {
+    prefix bgp;
+  }
+  import ietf-inet-types {
+    prefix inet;
+  }
+  include huawei-bgp-type;
+  
+  organization
+    "Huawei Technologies Co., Ltd.";
+  contact
+    "Huawei Industrial Base Bantian, Longgang Shenzhen 518129                    
+        People's Republic of China                    
+        Website: http://www.huawei.com Email: support@huawei.com";
+  description
+    "Description of submodule bgp_bgpcomm";
+  revision 2018-06-11 {
+    description
+      "The modifications in the schema file are synchronized to the YANG file.";
+    reference
+      "Huawei private.";
+  }
+  revision 2017-12-23 {
+    description
+      "The modifications in the schema file are synchronized to the YANG file.";
+    reference
+      "Huawei private.";
+  }
+  revision 2017-03-23 {
+    description
+      "Functions supported by the schema are added to the YANG file.";
+    reference
+      "Huawei private.";
+  }
+  revision 2013-01-01 {
+    description
+      "Init revision";
+    reference
+      "Huawei private.";
+  }
+  grouping bgp_bgpcomm_peerRpdRevRtTables_type {
+    description
+      "";
+    list peerRpdRevRtTable {
+      when "../../../../afType='rpd'";
+      key "bolPrefix imTableId from";
+      config false;
+      description
+        "RPD rev routing table.";
+      leaf bolPrefix {
+        type string {
+          length "0..300";
+        }
+        config false;
+        description
+          "RPD Route Prefix.";
+      }
+      leaf imTableId {
+        type uint32;
+        config false;
+        description
+          "ID of the routing table to which routes are imported.";
+      }
+      leaf from {
+        type inet:ip-address-no-zone;
+        config false;
+        description
+          "Source peer that sends a route.";
+      }
+      leaf locPrf {
+        type uint32 {
+          range "0..4294967295";
+        }
+        config false;
+        description
+          "Local priority.";
+      }
+      leaf prefVal {
+        type uint32 {
+          range "0..4294967295";
+        }
+        config false;
+        description
+          "Preferred value of a protocol.";
+      }
+      leaf preference {
+        type uint8 {
+          range "0..255";
+        }
+        config false;
+        description
+          "Preference of a route.";
+      }
+      leaf pathAs {
+        type string {
+          length "0..300";
+        }
+        config false;
+        description
+          "List of the ASs that packets pass through.";
+      }
+      leaf origin {
+        type bgpcommOrigin;
+        config false;
+        description
+          "Origin of a route.";
+      }
+      leaf med {
+        type uint32 {
+          range "0..4294967295";
+        }
+        config false;
+        description
+          "Route MED in the attribute node.";
+      }
+      leaf flagString {
+        type string {
+          length "0..100";
+        }
+        config false;
+        description
+          "Route flag that contains a string of characters.";
+      }
+      leaf rtWorseReason {
+        type string {
+          length "1..50";
+        }
+        config false;
+        description
+          "Reason why a route is not selected.";
+      }
+      leaf peerString {
+        type string {
+          length "0..300";
+        }
+        config false;
+        description
+          "List of sending peers.";
+      }
+      leaf time {
+        type uint32 {
+          range "0..4294967295";
+        }
+        config false;
+        description
+          "Time stamp of a route.";
+      }
+      leaf community {
+        type string {
+          length "0..120";
+        }
+        config false;
+        description
+          "Community attribute of a RPD route.";
+      }
+      leaf extCommunity {
+        type string {
+          length "0..300";
+        }
+        config false;
+        description
+          "Extended community attribute.";
+      }
+      leaf originator {
+        type inet:ip-address-no-zone;
+        config false;
+        description
+          "Router ID of the route initiator.";
+      }
+      leaf clusterList {
+        type string {
+          length "0..300";
+        }
+        config false;
+        description
+          "Cluster list of a RPD route.";
+      }
+      leaf remoteRouteId {
+        type inet:ipv4-address-no-zone;
+        config false;
+        description
+          "Router ID of a peer.";
+      }
+      leaf widecommunity {
+        type string {
+          length "0..10240";
+        }
+        config false;
+        description
+          "Widecommunity.";
+      }
+    }
+  }
+  grouping bgp_bgpcomm_peerRpdAdvRtTables_type {
+    description
+      "";
+    list peerRpdAdvRtTable {
+      when "../../../../afType='rpd'";
+      key "bolPrefix imTableId from";
+      config false;
+      description
+        "RPD adv routing table.";
+      leaf bolPrefix {
+        type string {
+          length "0..300";
+        }
+        config false;
+        description
+          "RPD Route Prefix.";
+      }
+      leaf imTableId {
+        type uint32;
+        config false;
+        description
+          "ID of the routing table to which routes are imported.";
+      }
+      leaf from {
+        type inet:ip-address-no-zone;
+        config false;
+        description
+          "Source peer that sends a route.";
+      }
+      leaf locPrf {
+        type uint32 {
+          range "0..4294967295";
+        }
+        config false;
+        description
+          "Local priority.";
+      }
+      leaf prefVal {
+        type uint32 {
+          range "0..4294967295";
+        }
+        config false;
+        description
+          "Preferred value of a protocol.";
+      }
+      leaf preference {
+        type uint8 {
+          range "0..255";
+        }
+        config false;
+        description
+          "Preference of a route.";
+      }
+      leaf pathAs {
+        type string {
+          length "0..300";
+        }
+        config false;
+        description
+          "List of the ASs that packets pass through.";
+      }
+      leaf origin {
+        type bgpcommOrigin;
+        config false;
+        description
+          "Origin of a route.";
+      }
+      leaf med {
+        type uint32 {
+          range "0..4294967295";
+        }
+        config false;
+        description
+          "Route MED in the attribute node.";
+      }
+      leaf flagString {
+        type string {
+          length "0..100";
+        }
+        config false;
+        description
+          "Route flag that contains a string of characters.";
+      }
+      leaf rtWorseReason {
+        type string {
+          length "1..50";
+        }
+        config false;
+        description
+          "Reason why a route is not selected.";
+      }
+      leaf peerString {
+        type string {
+          length "0..300";
+        }
+        config false;
+        description
+          "List of sending peers.";
+      }
+      leaf time {
+        type uint32 {
+          range "0..4294967295";
+        }
+        config false;
+        description
+          "Time stamp of a route.";
+      }
+      leaf community {
+        type string {
+          length "0..120";
+        }
+        config false;
+        description
+          "Community attribute of a RPD route.";
+      }
+      leaf extCommunity {
+        type string {
+          length "0..300";
+        }
+        config false;
+        description
+          "Extended community attribute.";
+      }
+      leaf originator {
+        type inet:ip-address-no-zone;
+        config false;
+        description
+          "Router ID of the route initiator.";
+      }
+      leaf clusterList {
+        type string {
+          length "0..300";
+        }
+        config false;
+        description
+          "Cluster list of a RPD route.";
+      }
+      leaf remoteRouteId {
+        type inet:ipv4-address-no-zone;
+        config false;
+        description
+          "Router ID of a peer.";
+      }
+      leaf widecommunity {
+        type string {
+          length "0..10240";
+        }
+        config false;
+        description
+          "Widecommunity.";
+      }
+    }
+  }
+  grouping bgp_bgpcomm_rpdRoutingTables_type {
+    description
+      "";
+    list rpdRoutingTable {
+      when "../../afType='rpd'";
+      key "bolPrefix imTableId from";
+      config false;
+      description
+        "RPD routing table.";
+      leaf bolPrefix {
+        type string {
+          length "0..300";
+        }
+        config false;
+        description
+          "RPD Route Prefix.";
+      }
+      leaf imTableId {
+        type uint32;
+        config false;
+        description
+          "ID of the routing table to which routes are imported.";
+      }
+      leaf from {
+        type inet:ip-address-no-zone;
+        config false;
+        description
+          "Source peer that sends a route.";
+      }
+      leaf locPrf {
+        type uint32 {
+          range "0..4294967295";
+        }
+        config false;
+        description
+          "Local priority.";
+      }
+      leaf prefVal {
+        type uint32 {
+          range "0..4294967295";
+        }
+        config false;
+        description
+          "Preferred value of a protocol.";
+      }
+      leaf preference {
+        type uint8 {
+          range "0..255";
+        }
+        config false;
+        description
+          "Preference of a route.";
+      }
+      leaf pathAs {
+        type string {
+          length "0..300";
+        }
+        config false;
+        description
+          "List of the ASs that packets pass through.";
+      }
+      leaf origin {
+        type bgpcommOrigin;
+        config false;
+        description
+          "Origin of a route.";
+      }
+      leaf med {
+        type uint32 {
+          range "0..4294967295";
+        }
+        config false;
+        description
+          "Route MED in the attribute node.";
+      }
+      leaf flagString {
+        type string {
+          length "0..100";
+        }
+        config false;
+        description
+          "Route flag that contains a string of characters.";
+      }
+      leaf rtWorseReason {
+        type string {
+          length "1..50";
+        }
+        config false;
+        description
+          "Reason why a route is not selected.";
+      }
+      leaf peerString {
+        type string {
+          length "0..300";
+        }
+        config false;
+        description
+          "List of sending peers.";
+      }
+      leaf time {
+        type uint32 {
+          range "0..4294967295";
+        }
+        config false;
+        description
+          "Time stamp of a route.";
+      }
+      leaf community {
+        type string {
+          length "0..120";
+        }
+        config false;
+        description
+          "Community attribute of a RPD route.";
+      }
+      leaf extCommunity {
+        type string {
+          length "0..300";
+        }
+        config false;
+        description
+          "Extended community attribute.";
+      }
+      leaf originator {
+        type inet:ip-address-no-zone;
+        config false;
+        description
+          "Router ID of the route initiator.";
+      }
+      leaf clusterList {
+        type string {
+          length "0..300";
+        }
+        config false;
+        description
+          "Cluster list of a RPD route.";
+      }
+      leaf remoteRouteId {
+        type inet:ipv4-address-no-zone;
+        config false;
+        description
+          "Router ID of a peer.";
+      }
+      leaf widecommunity {
+        type string {
+          length "0..10240";
+        }
+        config false;
+        description
+          "Widecommunity.";
+      }
+    }
+  }
+  grouping bgp_bgpcomm_rpdPolicyInfos_type {
+    description
+      "";
+    list rpdPolicyInfo {
+      when "../../../../afType='ipv4uni'";
+      key "policyType distingguish";
+      config false;
+      max-elements  "65535";
+      description
+        "RPD policy information.";
+      leaf policyType {
+        type rpdPolicyType;
+        config false;
+        description
+          "Export or import policy.";
+      }
+      leaf distingguish {
+        type uint32;
+        config false;
+        description
+          "Policy index.";
+      }
+      leaf actionSetCostType {
+        type bgpApplyCostChoice;
+        config false;
+        description
+          "Cost application type (increasing, decreasing, or replacing the original cost).";
+      }
+      leaf actionSetCostValue {
+        type uint32;
+        config false;
+        description
+          "Cost application value.It's invalid when type is nothing.";
+      }
+      leaf actionDeny {
+        type boolean;
+        config false;
+        description
+          "Permit or deny.";
+      }
+      container actionPrependAs {
+        config false;
+        description
+          "Add an AS number to the AS_Path.";
+        leaf applyAsPathStr {
+          type string {
+            length "0..10240";
+          }
+          config false;
+          description
+            "AS_Path value, consisting multiple AS numbers.";
+        }
+      }
+      container matchIPv4Prefixs {
+        config false;
+        description
+          "Prefixes for matching.";
+        list matchIPv4Prefix {
+          key "ipAddress ipMask leMask geMask maskType";
+          config false;
+          description
+            "Prefix for matching.";
+          leaf ipAddress {
+            type inet:ip-address-no-zone;
+            config false;
+            description
+              "Prefix address, in the format of an IP address.";
+          }
+          leaf ipMask {
+            type inet:ip-address-no-zone;
+            config false;
+            description
+              "Prefix mask, in the format of an IP address.";
+          }
+          leaf leMask {
+            type uint32;
+            config false;
+            description
+              "Maximum prefix mask length. The value is an integer.";
+          }
+          leaf geMask {
+            type uint32;
+            config false;
+            description
+              "Minimum prefix mask length. The value is an integer.";
+          }
+          leaf maskType {
+            type bgpPrefixMaskType;
+            config false;
+            description
+              "Mask Type.";
+          }
+        }
+      }
+      container matchCommunityFilters {
+        config false;
+        description
+          "Community filters.";
+        list matchCommunityFilter {
+          key "communityValue";
+          config false;
+          max-elements  "32";
+          description
+            "Community filter.";
+          leaf communityValue {
+            type string {
+              length "0..300";
+            }
+            config false;
+            description
+              "Community value.";
+          }
+        }
+      }
+      container matchAsPathFilters {
+        config false;
+        description
+          "AS_Path filters.";
+        list matchAsPathFilter {
+          key "asPathRegex";
+          config false;
+          max-elements  "32";
+          description
+            "AS_Path filter.";
+          leaf asPathRegex {
+            type string {
+              length "0..1024";
+            }
+            config false;
+            description
+              "AS_Path regular expression.";
+          }
+        }
+      }
+    }
+  }
+}

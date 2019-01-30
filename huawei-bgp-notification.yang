@@ -1,0 +1,412 @@
+/*
+Copyright (C) 2013-2018 Huawei Technologies Co., Ltd. All rights reserved.
+*/
+submodule huawei-bgp-notification {
+  yang-version 1;
+  belongs-to huawei-bgp {
+    prefix bgp;
+  }
+  import ietf-inet-types {
+    prefix inet;
+  }
+  organization
+    "Huawei Technologies Co., Ltd.";
+  contact
+    "Huawei Industrial Base Bantian, Longgang Shenzhen 518129 People's Republic of China Website: http://www.huawei.com Email: support@huawei.com";
+  description
+    "notification of bgp";
+  revision 2018-06-11 {
+    description
+      "The modifications in the schema file are synchronized to the YANG file.";
+    reference
+      "Huawei private.";
+  }
+  revision 2017-12-23 {
+    description
+      "The modifications in the schema file are synchronized to the YANG file.";
+    reference
+      "Huawei private.";
+  }
+  revision 2017-03-23 {
+    description
+      "Functions supported by the schema are added to the YANG file.";
+    reference
+      "Huawei private.";
+  }
+  revision 2013-01-01 {
+    description
+      "Init revision";
+    reference
+      "Huawei private.";
+  }
+  notification ESTABLISHED {
+    description
+      "The BGP FSM enters the Established state. (BgpPeerRemoteAddr=[PeerIpv4Ipv6Addr], BgpPeerLastError=[PeerLastError], BgpPeerState=[PeerState], LocalIfName=[LocalIfName], Reason=[Reason])";
+    leaf PeerIpv4Addr {
+      type inet:ipv4-address-no-zone;
+      description
+        "Peer address OID:1.3.6.1.2.1.15.3.1.7";
+    }
+    leaf PeerLastError {
+      type string;
+      description
+        "The error code of BGP Notification OID:1.3.6.1.2.1.15.3.1.14";
+    }
+    leaf PeerState {
+      type uint32;
+      description
+        "BGP peer state OID:1.3.6.1.2.1.15.3.1.2";
+    }
+    leaf InstanceId {
+      type string;
+      description
+        "Instance ID OID:1.3.6.1.4.1.2011.5.25.177.1.1.1.1.1";
+    }
+    leaf AddrFamilyAfi {
+      type uint32;
+      description
+        "Address family OID:1.3.6.1.4.1.2011.5.25.177.1.1.1.1.2";
+    }
+    leaf AddrFamilySafi {
+      type uint32;
+      description
+        "Sub address family OID:1.3.6.1.4.1.2011.5.25.177.1.1.1.1.3";
+    }
+    leaf PeerAddrType {
+      type uint32;
+      description
+        "Peer address type OID:1.3.6.1.4.1.2011.5.25.177.1.1.1.1.4";
+    }
+    leaf PeerIpv4Ipv6Addr {
+      type inet:ip-address-no-zone;
+      description
+        "Peer address OID:1.3.6.1.4.1.2011.5.25.177.1.1.1.1.5";
+    }
+    leaf Reason {
+      type string;
+      description
+        "reason OID:1.3.6.1.4.1.2011.5.25.177.1.1.2.1.10";
+    }
+    leaf LocalIfIndex {
+      type uint32;
+      description
+        "Local interface index: OID:1.3.6.1.2.1.2.2.1.1";
+    }
+    leaf LocalIfName {
+      type string;
+      description
+        "Local If Name: OID:1.3.6.1.2.1.31.1.1.1.1";
+    }
+    leaf ifIndex {
+      type uint32;
+      description
+        "interface index";
+    }
+  }
+  notification BACKWARD {
+    description
+      "The BGP FSM moves from a higher numbered state to a lower numbered state. (BgpPeerRemoteAddr=[PeerIpv4Ipv6Addr], BgpPeerLastError=[PeerLastError], BgpPeerState=[PeerState], LocalIfName=[LocalIfName], Reason=[Reason])";
+    leaf PeerIpv4Addr {
+      type inet:ipv4-address-no-zone;
+      description
+        "Peer address OID:1.3.6.1.2.1.15.3.1.7";
+    }
+    leaf PeerLastError {
+      type string;
+      description
+        "The error code of BGP Notification OID:1.3.6.1.2.1.15.3.1.14";
+    }
+    leaf PeerState {
+      type uint32;
+      description
+        "BGP peer state OID:1.3.6.1.2.1.15.3.1.2";
+    }
+    leaf InstanceId {
+      type string;
+      description
+        "Instance ID OID:1.3.6.1.4.1.2011.5.25.177.1.1.1.1.1";
+    }
+    leaf AddrFamilyAfi {
+      type uint32;
+      description
+        "Address family OID:1.3.6.1.4.1.2011.5.25.177.1.1.1.1.2";
+    }
+    leaf AddrFamilySafi {
+      type uint32;
+      description
+        "Sub address family OID:1.3.6.1.4.1.2011.5.25.177.1.1.1.1.3";
+    }
+    leaf PeerAddrType {
+      type uint32;
+      description
+        "Peer address type OID:1.3.6.1.4.1.2011.5.25.177.1.1.1.1.4";
+    }
+    leaf PeerIpv4Ipv6Addr {
+      type inet:ip-address-no-zone;
+      description
+        "Peer address OID:1.3.6.1.4.1.2011.5.25.177.1.1.1.1.5";
+    }
+    leaf Reason {
+      type string;
+      description
+        "reason OID:1.3.6.1.4.1.2011.5.25.177.1.1.2.1.10";
+    }
+    leaf LocalIfIndex {
+      type uint32;
+      description
+        "Local interface index: OID:1.3.6.1.2.1.2.2.1.1";
+    }
+    leaf LocalIfName {
+      type string;
+      description
+        "Local If Name: OID:1.3.6.1.2.1.31.1.1.1.1";
+    }
+    leaf ifIndex {
+      type uint32;
+      description
+        "interface index";
+    }
+  }
+  notification hwBgpPeerRouteExceed {
+    description
+      "The number of routes received from the BGP peer exceeded the alarm number. (InstanceId=[InstanceId], Afi=[AddrFamilyAfi], Safi=[AddrFamilySafi], PeerRemoteAddrType=[PeerIPAddrType], PeerRemoteAddr=[PeerIPAddr], MaxRouteNum=[RouteLimitNum], AlarmThreshold=[RouteLimitThreshold])";
+    leaf InstanceId {
+      type uint32;
+      description
+        "Instance ID OID:1.3.6.1.4.1.2011.5.25.177.1.1.1.1.1";
+    }
+    leaf AddrFamilyAfi {
+      type uint32;
+      description
+        "Address family OID:1.3.6.1.4.1.2011.5.25.177.1.1.1.1.2";
+    }
+    leaf AddrFamilySafi {
+      type uint32;
+      description
+        "Sub address family OID:1.3.6.1.4.1.2011.5.25.177.1.1.1.1.3";
+    }
+    leaf PeerIPAddrType {
+      type uint32;
+      description
+        "Peer address type OID:1.3.6.1.4.1.2011.5.25.177.1.1.1.1.4";
+    }
+    leaf PeerIPAddr {
+      type inet:ip-address-no-zone;
+      description
+        "Peer address OID:1.3.6.1.4.1.2011.5.25.177.1.1.1.1.5";
+    }
+    leaf RouteLimitNum {
+      type uint32;
+      description
+        "Route limit number OID:1.3.6.1.4.1.2011.5.25.177.1.1.5.1.1";
+    }
+    leaf RouteLimitThreshold {
+      type uint8;
+      description
+        "Route limit threshold OID:1.3.6.1.4.1.2011.5.25.177.1.1.5.1.2";
+    }
+  }
+  notification hwBgpPeerRouteExceedClear {
+    description
+      "The number of routes received from the BGP peer decreased below the alarm number. (InstanceId=[InstanceId], Afi=[AddrFamilyAfi], Safi=[AddrFamilySafi], PeerRemoteAddrType=[PeerIPAddrType], PeerRemoteAddr=[PeerIPAddr], MaxRouteNum=[RouteLimitNum], AlarmThreshold=[RouteLimitThreshold])";
+    leaf InstanceId {
+      type uint32;
+      description
+        "Instance ID OID:1.3.6.1.4.1.2011.5.25.177.1.1.1.1.1";
+    }
+    leaf AddrFamilyAfi {
+      type uint32;
+      description
+        "Address family OID:1.3.6.1.4.1.2011.5.25.177.1.1.1.1.2";
+    }
+    leaf AddrFamilySafi {
+      type uint32;
+      description
+        "Sub address family OID:1.3.6.1.4.1.2011.5.25.177.1.1.1.1.3";
+    }
+    leaf PeerIPAddrType {
+      type uint32;
+      description
+        "Peer address type OID:1.3.6.1.4.1.2011.5.25.177.1.1.1.1.4";
+    }
+    leaf PeerIPAddr {
+      type inet:ip-address-no-zone;
+      description
+        "Peer address OID:1.3.6.1.4.1.2011.5.25.177.1.1.1.1.5";
+    }
+    leaf RouteLimitNum {
+      type uint32;
+      description
+        "Route limit number OID:1.3.6.1.4.1.2011.5.25.177.1.1.5.1.1";
+    }
+    leaf RouteLimitThreshold {
+      type uint8;
+      description
+        "Route limit threshold OID:1.3.6.1.4.1.2011.5.25.177.1.1.5.1.2";
+    }
+  }
+  notification hwBgpPeerRouteNumThresholdClear {
+    description
+      "The number of routes received from the BGP peer decreased below the alarm threshold. (InstanceId=[InstanceId], Afi=[AddrFamilyAfi], Safi=[AddrFamilySafi], PeerRemoteAddrType=[PeerIPAddrType], PeerRemoteAddr=[PeerIPAddr], MaxRouteNumber=[RouteLimitNum], AlarmThreshold=[RouteLimitThreshold])";
+    leaf InstanceId {
+      type uint32;
+      description
+        "Instance ID OID:1.3.6.1.4.1.2011.5.25.177.1.1.1.1.1";
+    }
+    leaf AddrFamilyAfi {
+      type uint32;
+      description
+        "Address family OID:1.3.6.1.4.1.2011.5.25.177.1.1.1.1.2";
+    }
+    leaf AddrFamilySafi {
+      type uint32;
+      description
+        "Sub address family OID:1.3.6.1.4.1.2011.5.25.177.1.1.1.1.3";
+    }
+    leaf PeerIPAddrType {
+      type uint32;
+      description
+        "Peer address type OID:1.3.6.1.4.1.2011.5.25.177.1.1.1.1.4";
+    }
+    leaf PeerIPAddr {
+      type inet:ip-address-no-zone;
+      description
+        "Peer address OID:1.3.6.1.4.1.2011.5.25.177.1.1.1.1.5";
+    }
+    leaf RouteLimitNum {
+      type uint32;
+      description
+        "Route limit number OID:1.3.6.1.4.1.2011.5.25.177.1.1.5.1.1";
+    }
+    leaf RouteLimitThreshold {
+      type uint8;
+      description
+        "Route limit threshold OID:1.3.6.1.4.1.2011.5.25.177.1.1.5.1.2";
+    }
+  }
+  notification hwBgpPeerRouteNumThresholdExceed {
+    description
+      "The number of routes received from the BGP peer exceeded the alarm threshold. (InstanceId=[InstanceId], Afi=[AddrFamilyAfi], Safi=[AddrFamilySafi], PeerRemoteAddrType=[PeerIPAddrType], PeerRemoteAddr=[PeerIPAddr], MaxRouteNumber=[RouteLimitNum], AlarmThreshold=[RouteLimitThreshold])";
+    leaf InstanceId {
+      type uint32;
+      description
+        "Instance ID OID:1.3.6.1.4.1.2011.5.25.177.1.1.1.1.1";
+    }
+    leaf AddrFamilyAfi {
+      type uint32;
+      description
+        "Address family OID:1.3.6.1.4.1.2011.5.25.177.1.1.1.1.2";
+    }
+    leaf AddrFamilySafi {
+      type uint32;
+      description
+        "Sub address family OID:1.3.6.1.4.1.2011.5.25.177.1.1.1.1.3";
+    }
+    leaf PeerIPAddrType {
+      type uint32;
+      description
+        "Peer address type OID:1.3.6.1.4.1.2011.5.25.177.1.1.1.1.4";
+    }
+    leaf PeerIPAddr {
+      type inet:ip-address-no-zone;
+      description
+        "Peer address OID:1.3.6.1.4.1.2011.5.25.177.1.1.1.1.5";
+    }
+    leaf RouteLimitNum {
+      type uint32;
+      description
+        "Route limit number OID:1.3.6.1.4.1.2011.5.25.177.1.1.5.1.1";
+    }
+    leaf RouteLimitThreshold {
+      type uint8;
+      description
+        "Route limit threshold OID:1.3.6.1.4.1.2011.5.25.177.1.1.5.1.2";
+    }
+  }
+  notification hwBgpVrfRouteNumReachThresholdClear {
+    description
+      "The number of routes in the VPN instance fell below the clear alarm threshold. (CurrentRouteNum=[CurrentRouteNum], ThresholdValue=[ThresholdValue], RouteType=[RouteType], Vpn-instance=[Vpn-instance], Address Family=[AddressFamily])";
+    leaf CurrentRouteNum {
+      type uint32;
+      description
+        "Current number of routes";
+    }
+    leaf ThresholdValue {
+      type uint32;
+      description
+        "Threshold value";
+    }
+    leaf RouteType {
+      type string;
+      description
+        "Route type";
+    }
+    leaf Vpn-instance {
+      type string;
+      description
+        "The name of VPN instance";
+    }
+    leaf AddressFamily {
+      type string;
+      description
+        "Address family";
+    }
+  }
+  notification hwBgpVrfRouteNumReachThreshold {
+    description
+      "The number of routes in the VPN instance reached the alarm threshould. (CurrentRouteNum=[CurrentRouteNum], ThresholdValue=[ThresholdValue], RouteType=[RouteType], Vpn-instance=[Vpn-instance], Address Family=[AddressFamily])";
+    leaf CurrentRouteNum {
+      type uint32;
+      description
+        "Current number of routes";
+    }
+    leaf ThresholdValue {
+      type uint32;
+      description
+        "Threshold value";
+    }
+    leaf RouteType {
+      type string;
+      description
+        "Route type";
+    }
+    leaf Vpn-instance {
+      type string;
+      description
+        "The name of VPN instance";
+    }
+    leaf AddressFamily {
+      type string;
+      description
+        "Address family";
+    }
+  }
+  notification bgpBackwardTransNotification {
+    leaf PeerIpv4Addr {
+      type inet:ipv4-address-no-zone;
+    }
+    leaf PeerLastError {
+      type string;
+    }
+    leaf PeerState {
+      type uint32;
+    }
+    leaf VpnInstance {
+      type string;
+    }
+  }
+  notification bgpEstablishedNotification {
+    leaf PeerIpv4Addr {
+      type inet:ipv4-address-no-zone;
+    }
+    leaf PeerLastError {
+      type string;
+    }
+    leaf PeerState {
+      type uint32;
+    }
+    leaf VpnInstance {
+      type string;
+    }
+  }
+}

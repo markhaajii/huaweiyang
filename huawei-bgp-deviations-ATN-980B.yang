@@ -1,0 +1,548 @@
+module huawei-bgp-deviations-ATN-980B {
+  namespace "http://www.huawei.com/netconf/vrp/huawei-bgp-deviations-ATN-980B";
+  prefix bgp-devs-ATN-980B;
+
+  import huawei-bgp {
+    prefix bgp;
+  }
+
+  organization
+    "Huawei Technologies Co., Ltd.";
+  contact
+    "Huawei Industrial Base Bantian, Longgang Shenzhen 518129                    
+        People's Republic of China                    
+        Website: http://www.huawei.com Email: support@huawei.com";
+  description
+    "Inter-AS routing protocol that exchanges Network Layer Reachability Information (NLRI) with other BGP systems.";
+
+  revision 2018-06-11 {
+    description
+      "The modifications in the schema file are synchronized to the YANG file.";
+    reference "Huawei private.";
+  }
+  revision 2017-12-23 {
+    description
+      "The modifications in the schema file are synchronized to the YANG file.";
+    reference "Huawei private.";
+  }
+  revision 2017-03-23 {
+    description
+      "Functions supported by the schema are added to the YANG file.";
+    reference "Huawei private.";
+  }
+  revision 2013-01-01 {
+    description
+      "Init revision";
+    reference "Huawei private.";
+  }
+
+  typedef bgpcommFilterProtocol-deviations {
+    type enumeration {
+      enum "noprotocol" {
+        description
+          "Import routes of all protocols.";
+      }
+      enum "direct" {
+        description
+          "Import direct routes.";
+      }
+      enum "ospf" {
+        description
+          "Import OSPF routes.";
+      }
+      enum "isis" {
+        description
+          "Import IS-IS routes.";
+      }
+      enum "static" {
+        description
+          "Import static routes.";
+      }
+      enum "rip" {
+        description
+          "Import RIP routes.";
+      }
+      enum "ospfv3" {
+        description
+          "Import OSPFv3 routes.";
+      }
+      enum "ripng" {
+        description
+          "Import RIPng routes.";
+      }
+      enum "unr" {
+        description
+          "Import UNR routes.";
+      }
+    }
+    description
+      "the protocol of bgp common filter";
+  }
+
+  typedef bgpcommImRouteProtocol-deviations {
+    type enumeration {
+      enum "direct" {
+        description
+          "Import direct routes.";
+      }
+      enum "ospf" {
+        description
+          "Import OSPF routes.";
+      }
+      enum "isis" {
+        description
+          "Import IS-IS routes.";
+      }
+      enum "static" {
+        description
+          "Import static routes.";
+      }
+      enum "rip" {
+        description
+          "Import RIP routes.";
+      }
+      enum "ospfv3" {
+        description
+          "Import OSPFv3 routes.";
+      }
+      enum "ripng" {
+        description
+          "Import RIPng routes.";
+      }
+      enum "unr" {
+        description
+          "Import UNR routes.";
+      }
+    }
+    description
+      "the protocol of bgpcommonImRoute";
+  }
+
+  typedef bgpcommPrefixType-deviations {
+    type enumeration {
+      enum "ipv4uni" {
+        description
+          "IPv4 unicast address family.";
+      }
+      enum "ipv4multi" {
+        description
+          "IPv4 multicast address family.";
+      }
+      enum "ipv4vpn" {
+        description
+          "IPv4 VPN address family.";
+      }
+      enum "ipv6uni" {
+        description
+          "IPv6 unicast address family.";
+      }
+      enum "ipv6vpn" {
+        description
+          "IPv6 VPN address family.";
+      }
+      enum "ipv4flow" {
+        description
+          "IPv4 Flow address family.";
+      }
+      enum "l2vpnad" {
+        description
+          "L2VPN-AD Address Family.";
+      }
+      enum "mvpn" {
+        description
+          "IPv4 MVPN address family.";
+      }
+      enum "vpntarget" {
+        description
+          "Vpn Target Address Family";
+      }
+      enum "evpn" {
+        description
+          "EVPN address family.";
+      }
+      enum "ipv4vpnmcast" {
+        description
+          "IPv4 VPN Multicast Address Family.";
+      }
+      enum "ls" {
+        description
+          "Link-state Address Family.";
+      }
+      enum "mdt" {
+        description
+          "IPv4 MDT Address Family.";
+      }
+      enum "ipv6flow" {
+        description
+          "IPv6 Flow Address Family.";
+      }
+      enum "vpnv4flow" {
+        description
+          "Vpnv4 Flow Address Family.";
+      }
+      enum "ipv4labeluni" {
+        description
+          "IPv4 Labeled Address Family.";
+      }
+      enum "rpd" {
+        description
+          "RPD Address Family.";
+      }
+    }
+    description
+      "the type of bgpcommPrefix";
+  }
+
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpVrfAFs/bgp:bgpVrfAF/bgp:slowPeerDet" {
+    deviate replace {
+      default "true";
+    }
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpVrfAFs/bgp:bgpVrfAF/bgp:slowPeerAbDet" {
+    deviate replace {
+      default "true";
+    }
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpVrfAFs/bgp:bgpVrfAF/bgp:filterPolicys/bgp:filterPolicy/bgp:acl6NameOrNum" {
+    deviate replace {
+      type string {
+        length "1..64";
+      }
+    }
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpLsp/bgp:bgpLspInfos/bgp:bgpLspInfo/bgp:afType" {
+    deviate replace {
+      type bgp-devs-ATN-980B:bgpcommPrefixType-deviations;
+    }
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpVrfAFs/bgp:bgpVrfAF/bgp:afType" {
+    deviate replace {
+      type bgp-devs-ATN-980B:bgpcommPrefixType-deviations;
+    }
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpVrfAFs/bgp:bgpVrfAF/bgp:filterPolicys/bgp:filterPolicy/bgp:filterProtocol" {
+    deviate replace {
+      type bgp-devs-ATN-980B:bgpcommFilterProtocol-deviations;
+    }
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpVrfAFs/bgp:bgpVrfAF/bgp:importRoutes/bgp:importRoute/bgp:importProtocol" {
+    deviate replace {
+      type bgp-devs-ATN-980B:bgpcommImRouteProtocol-deviations;
+    }
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:vrfAllRoutingTables/bgp:vrfAllRoutingTable/bgp:afType" {
+    deviate replace {
+      type bgp-devs-ATN-980B:bgpcommPrefixType-deviations;
+    }
+  }
+  deviation "/bgp:refreshAll/bgp:input/bgp:afType" {
+    deviate replace {
+      type bgp-devs-ATN-980B:bgpcommPrefixType-deviations;
+    }
+  }
+  deviation "/bgp:refreshGroup/bgp:input/bgp:afType" {
+    deviate replace {
+      type bgp-devs-ATN-980B:bgpcommPrefixType-deviations;
+    }
+  }
+  deviation "/bgp:refreshIpAddress/bgp:input/bgp:afType" {
+    deviate replace {
+      type bgp-devs-ATN-980B:bgpcommPrefixType-deviations;
+    }
+  }
+  deviation "/bgp:refreshPeerType/bgp:input/bgp:afType" {
+    deviate replace {
+      type bgp-devs-ATN-980B:bgpcommPrefixType-deviations;
+    }
+  }
+  deviation "/bgp:resetAddrAll/bgp:input/bgp:afType" {
+    deviate replace {
+      type bgp-devs-ATN-980B:bgpcommPrefixType-deviations;
+    }
+  }
+  deviation "/bgp:resetAsNumber/bgp:input/bgp:afType" {
+    deviate replace {
+      type bgp-devs-ATN-980B:bgpcommPrefixType-deviations;
+    }
+  }
+  deviation "/bgp:resetAsPathRegexp/bgp:input/bgp:afType" {
+    deviate replace {
+      type bgp-devs-ATN-980B:bgpcommPrefixType-deviations;
+    }
+  }
+  deviation "/bgp:resetDampIpv4/bgp:input/bgp:afType" {
+    deviate replace {
+      type bgp-devs-ATN-980B:bgpcommPrefixType-deviations;
+    }
+  }
+  deviation "/bgp:resetDampenAll/bgp:input/bgp:afType" {
+    deviate replace {
+      type bgp-devs-ATN-980B:bgpcommPrefixType-deviations;
+    }
+  }
+  deviation "/bgp:resetFlapAll/bgp:input/bgp:afType" {
+    deviate replace {
+      type bgp-devs-ATN-980B:bgpcommPrefixType-deviations;
+    }
+  }
+  deviation "/bgp:resetFlapAsPathFilter/bgp:input/bgp:afType" {
+    deviate replace {
+      type bgp-devs-ATN-980B:bgpcommPrefixType-deviations;
+    }
+  }
+  deviation "/bgp:resetFlapNetworkAddr/bgp:input/bgp:afType" {
+    deviate replace {
+      type bgp-devs-ATN-980B:bgpcommPrefixType-deviations;
+    }
+  }
+  deviation "/bgp:resetFlapPeerAddr/bgp:input/bgp:afType" {
+    deviate replace {
+      type bgp-devs-ATN-980B:bgpcommPrefixType-deviations;
+    }
+  }
+  deviation "/bgp:resetFlowSpecStat/bgp:input/bgp:afType" {
+    deviate replace {
+      type bgp-devs-ATN-980B:bgpcommPrefixType-deviations;
+    }
+  }
+  deviation "/bgp:resetGroup/bgp:input/bgp:afType" {
+    deviate replace {
+      type bgp-devs-ATN-980B:bgpcommPrefixType-deviations;
+    }
+  }
+  deviation "/bgp:resetIpAddr/bgp:input/bgp:afType" {
+    deviate replace {
+      type bgp-devs-ATN-980B:bgpcommPrefixType-deviations;
+    }
+  }
+  deviation "/bgp:resetPeerType/bgp:input/bgp:afType" {
+    deviate replace {
+      type bgp-devs-ATN-980B:bgpcommPrefixType-deviations;
+    }
+  }
+  deviation "/bgp:BACKWARD/bgp:ifIndex" {
+    deviate not-supported;
+  }
+  deviation "/bgp:ESTABLISHED/bgp:ifIndex" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpEvrfs/bgp:bgpEvrf/bgp:macRoutingTables/bgp:macRoutingTable/bgp:sourceAFI" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpEvrfs/bgp:bgpEvrf/bgp:macRoutingTables/bgp:macRoutingTable/bgp:sourceRD" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpInsts" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpLsp/bgp:bgpLspInfos/bgp:bgpLspInfo/bgp:bgpLspTnlInfos" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpSite/bgp:delayTime" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpSite/bgp:localIfnetMtu" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpSite/bgp:lowestPriority" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpSite/bgp:memoryLimit" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpSite/bgp:pathAttrErrCap" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfAlarms" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpPeerGroups/bgp:bgpPeerGroup/bgp:pathAttrDiscardIdMap" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpPeerGroups/bgp:bgpPeerGroup/bgp:pathAttrWithdrawIdMap" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpPeerGroups/bgp:bgpPeerGroup/bgp:peerGroupBfd/bgp:perLinkEcho" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpPeers/bgp:bgpPeer/bgp:pathAttrDiscardIdMap" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpPeers/bgp:bgpPeer/bgp:pathAttrWithdrawIdMap" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpPeers/bgp:bgpPeer/bgp:peerBfd/bgp:perLinkEcho" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpVrfAFs/bgp:bgpVrfAF/bgp:bwBcNonstd" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpVrfAFs/bgp:bgpVrfAF/bgp:flowRoutingTables/bgp:flowRoutingTable/bgp:flowInfGrpStats" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpVrfAFs/bgp:bgpVrfAF/bgp:ibgpIfSensitive" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpVrfAFs/bgp:bgpVrfAF/bgp:labelAdvEnable" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpVrfAFs/bgp:bgpVrfAF/bgp:lowestPriority" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpVrfAFs/bgp:bgpVrfAF/bgp:lsLinkRoutes/bgp:lsLinkRoute/bgp:bwConstBc0Std" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpVrfAFs/bgp:bgpVrfAF/bgp:lsLinkRoutes/bgp:lsLinkRoute/bgp:bwConstModelStd" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpVrfAFs/bgp:bgpVrfAF/bgp:lsLinkRoutes/bgp:lsLinkRoute/bgp:bwConstraintBc0" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpVrfAFs/bgp:bgpVrfAF/bgp:lsLinkRoutes/bgp:lsLinkRoute/bgp:bwConstraintModel" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpVrfAFs/bgp:bgpVrfAF/bgp:lsLinkRoutes/bgp:lsLinkRoute/bgp:loMultiBc0" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpVrfAFs/bgp:bgpVrfAF/bgp:lsLinkRoutes/bgp:lsLinkRoute/bgp:unresrvBwBc0" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpVrfAFs/bgp:bgpVrfAF/bgp:macRoutingTables/bgp:macRoutingTable/bgp:sourceAFI" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpVrfAFs/bgp:bgpVrfAF/bgp:macRoutingTables/bgp:macRoutingTable/bgp:sourceRD" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpVrfAFs/bgp:bgpVrfAF/bgp:nexthopThirdParty" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpVrfAFs/bgp:bgpVrfAF/bgp:peerAFs/bgp:peerAF/bgp:advCmulMatNhp" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpVrfAFs/bgp:bgpVrfAF/bgp:peerAFs/bgp:peerAF/bgp:advertiseIrbv6" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpVrfAFs/bgp:bgpVrfAF/bgp:peerAFs/bgp:peerAF/bgp:advertiseND" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpVrfAFs/bgp:bgpVrfAF/bgp:peerAFs/bgp:peerAF/bgp:advertiseRemoteNexthop" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpVrfAFs/bgp:bgpVrfAF/bgp:peerAFs/bgp:peerAF/bgp:ipRtEnableDc" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpVrfAFs/bgp:bgpVrfAF/bgp:peerAFs/bgp:peerAF/bgp:macIpRtEnableDc" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpVrfAFs/bgp:bgpVrfAF/bgp:peerAFs/bgp:peerAF/bgp:peerInfo/bgp:attrdiscardstr" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpVrfAFs/bgp:bgpVrfAF/bgp:peerAFs/bgp:peerAF/bgp:peerflowAdvRtTables/bgp:peerflowAdvRtTable/bgp:flowInfGrpStats" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpVrfAFs/bgp:bgpVrfAF/bgp:peerAFs/bgp:peerAF/bgp:peerflowRevActRtTables/bgp:peerflowRevActRtTable/bgp:flowInfGrpStats" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpVrfAFs/bgp:bgpVrfAF/bgp:peerAFs/bgp:peerAF/bgp:peerflowRevRtTables/bgp:peerflowRevRtTable/bgp:flowInfGrpStats" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpVrfAFs/bgp:bgpVrfAF/bgp:peerAFs/bgp:peerAF/bgp:privateNexthop" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpVrfAFs/bgp:bgpVrfAF/bgp:peerAFs/bgp:peerAF/bgp:reoriginatedRtEnableDc" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpVrfAFs/bgp:bgpVrfAF/bgp:peerAFs/bgp:peerAF/bgp:sncImrtRtPolicyName" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpVrfAFs/bgp:bgpVrfAF/bgp:peerGroupAFs/bgp:peerGroupAF/bgp:advCmulMatNhp" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpVrfAFs/bgp:bgpVrfAF/bgp:peerGroupAFs/bgp:peerGroupAF/bgp:advertiseIrbv6" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpVrfAFs/bgp:bgpVrfAF/bgp:peerGroupAFs/bgp:peerGroupAF/bgp:advertiseND" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpVrfAFs/bgp:bgpVrfAF/bgp:peerGroupAFs/bgp:peerGroupAF/bgp:advertiseRemoteNexthop" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpVrfAFs/bgp:bgpVrfAF/bgp:peerGroupAFs/bgp:peerGroupAF/bgp:exportAcl6NameOrNum" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpVrfAFs/bgp:bgpVrfAF/bgp:peerGroupAFs/bgp:peerGroupAF/bgp:importAcl6NameOrNum" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpVrfAFs/bgp:bgpVrfAF/bgp:peerGroupAFs/bgp:peerGroupAF/bgp:ipRtEnableDc" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpVrfAFs/bgp:bgpVrfAF/bgp:peerGroupAFs/bgp:peerGroupAF/bgp:macIpRtEnableDc" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpVrfAFs/bgp:bgpVrfAF/bgp:peerGroupAFs/bgp:peerGroupAF/bgp:reoriginatedRtEnableDc" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpVrfAFs/bgp:bgpVrfAF/bgp:routingTables/bgp:routingTable/bgp:disAttrString" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:vrfAllRoutingTables/bgp:vrfAllRoutingTable/bgp:disAttrString" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpmultiinstcomm" {
+    deviate not-supported;
+  }
+  deviation "/bgp:refreshAll/bgp:input/bgp:pathrecovery" {
+    deviate not-supported;
+  }
+  deviation "/bgp:refreshAllPeerUp" {
+    deviate not-supported;
+  }
+  deviation "/bgp:resetFlowInfGrpStat" {
+    deviate not-supported;
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpVrfAFs/bgp:bgpVrfAF/bgp:ingressLspLoadBalancNum" {
+    deviate add {
+      must "not(../ingressLspProtect='bgpFrr' and ../ingressLspLoadBalancNum and ../ingressLspLoadBalancNum>1)";
+    }
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpVrfAFs/bgp:bgpVrfAF/bgp:ingressLspProtect" {
+    deviate add {
+      must "not(../ingressLspLoadBalancNum and ../ingressLspLoadBalancNum>1 and ../ingressLspProtect='bgpFrr')";
+    }
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpVrfAFs/bgp:bgpVrfAF/bgp:determinMed" {
+    deviate add {
+      must "not(../bestExternal='true' and ../addPathSelNum and ../determinMed='true')";
+    }
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpVrfAFs/bgp:bgpVrfAF/bgp:peerAFs/bgp:peerAF/bgp:reflectClient" {
+    deviate add {
+      must "not(../reflectClient='true' and ../advBestExternal='true')";
+    }
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpVrfAFs/bgp:bgpVrfAF/bgp:peerGroupAFs/bgp:peerGroupAF/bgp:reflectClient" {
+    deviate add {
+      must "not(../reflectClient='true' and ../advBestExternal='true')";
+    }
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpVrfAFs/bgp:bgpVrfAF/bgp:peerAFs/bgp:peerAF/bgp:addPathMode" {
+    deviate add {
+      must "not((../addPathMode and ../addPathMode!='null') and ../advBestExternal='true')";
+    }
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpVrfAFs/bgp:bgpVrfAF/bgp:peerGroupAFs/bgp:peerGroupAF/bgp:addPathMode" {
+    deviate add {
+      must "not((../addPathMode and ../addPathMode!='null') and ../advBestExternal='true')";
+    }
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpVrfAFs/bgp:bgpVrfAF/bgp:peerAFs/bgp:peerAF/bgp:advAddPathNum" {
+    deviate add {
+      must "not(../advAddPathNum and ../advBestExternal='true')";
+    }
+  }
+  deviation "/bgp:bgp/bgp:bgpcomm/bgp:bgpVrfs/bgp:bgpVrf/bgp:bgpVrfAFs/bgp:bgpVrfAF/bgp:peerGroupAFs/bgp:peerGroupAF/bgp:advAddPathNum" {
+    deviate add {
+      must "not(../advAddPathNum and ../advBestExternal='true')";
+    }
+  }
+}
