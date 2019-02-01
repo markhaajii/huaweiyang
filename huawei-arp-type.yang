@@ -1,0 +1,310 @@
+/*
+Copyright (C) 2013-2018 Huawei Technologies Co., Ltd. All rights reserved.
+*/
+submodule huawei-arp-type {
+  belongs-to huawei-arp {
+    prefix arp;
+  }
+  
+  organization
+    "Huawei Technologies Co., Ltd.";
+  contact
+    "Huawei Industrial Base Bantian, Longgang Shenzhen 518129                    
+        People's Republic of China                    
+        Website: http://www.huawei.com Email: support@huawei.com";
+  description
+    "ARP type.";
+  revision 2018-06-11 {
+    description
+      "The modifications in the schema file are synchronized to the YANG file.";
+    reference
+      "Huawei private.";
+  }
+  revision 2017-12-23 {
+    description
+      "The modifications in the schema file are synchronized to the YANG file.";
+    reference
+      "Huawei private.";
+  }
+  revision 2017-03-23 {
+    description
+      "Functions supported by the schema are added to the YANG file.";
+    reference
+      "Huawei private.";
+  }
+  revision 2013-01-01 {
+    description
+      "Init revision";
+    reference
+      "Huawei private.";
+  }
+  typedef arpStrictLearn {
+    type enumeration {
+      enum "force-disable" {
+        description
+          "Disable strict ARP learning on an interface.";
+      }
+      enum "force-enable" {
+        description
+          "Enable strict ARP learning on an interface.";
+      }
+      enum "trust" {
+        description
+          "Enable an interface to use global strict ARP learning policies if strict ARP learning is not enabled on the interface.";
+      }
+    }
+    description
+      "Whether to enable strict ARP learning.";
+  }
+  typedef arpGratuitousSend {
+    type enumeration {
+      enum "disable" {
+        description
+          "Disable Gratuitous-arp on interface.";
+      }
+      enum "enable" {
+        description
+          "Enable Gratuitous-arp on interface.";
+      }
+      enum "according-global" {
+        description
+          "Enable an interface to use global strict ARP learning policies if strict ARP learning is not enabled on the interface.";
+      }
+    }
+    description
+      "Whether to enable gratuitous ARP.";
+  }
+  typedef arpSuppType {
+    type enumeration {
+      enum "ARP" {
+        description
+          "Timestamp suppression performed on an interface board for ARP packets.";
+      }
+      enum "ARP-miss" {
+        description
+          "Timestamp suppression performed on an interface board for ARP Miss packets.";
+      }
+    }
+    description
+      "ARP suppression based on ARP message type.";
+  }
+  typedef arpSuppIpType {
+    type enumeration {
+      enum "Dest_Ip" {
+        description
+          "Destination-IP-based timestamp suppression.";
+      }
+      enum "Src_Ip" {
+        description
+          "Source-IP-based timestamp suppression.";
+      }
+      enum "Global_Port" {
+        description
+          "Global_Port-based timestamp suppression.";
+      }
+    }
+    description
+      "ARP suppression based on IP address type.";
+  }
+  typedef arpSuppPortType {
+    type enumeration {
+      enum "SrcPort" {
+        description
+          "Source-PORT-based timestamp suppression.";
+      }
+    }
+    description
+      "ARP suppression based on interface type.";
+  }
+  typedef arpStyleType {
+    type enumeration {
+      enum "StaticArp" {
+        description
+          "Static ARP entry.";
+      }
+      enum "DynamicArp" {
+        description
+          "Dynamic ARP entry.";
+      }
+      enum "BackupArp" {
+        description
+          "Remote backup ARP entry.";
+      }
+      enum "InterfaceArp" {
+        description
+          "Interface ARP entry.";
+      }
+      enum "OpenFlowArp" {
+        description
+          "ARP entry generated based on the OpenFlow table.";
+      }
+      enum "RedirectArp" {
+        description
+          "Redirect ARP.";
+      }
+    }
+    description
+      "Type of an ARP entry.";
+  }
+  typedef arpClearArpType {
+    type enumeration {
+      enum "ClearDynamicArp" {
+        description
+          "Clear dynamic ARP entries.";
+      }
+      enum "ClearBackupArp" {
+        description
+          "Clear remote backup ARP entries.";
+      }
+    }
+    description
+      "Type of an ARP clearance operation.";
+  }
+  typedef arpBatchType {
+    type enumeration {
+      enum "Batch" {
+        description
+          "Remote backup state is batch.";
+      }
+      enum "Real" {
+        description
+          "Remote backup state is real.";
+      }
+    }
+    description
+      "ARP backup type.";
+  }
+  typedef arpImportPolicy {
+    type enumeration {
+      enum "None" {
+        description
+          "None-policy";
+      }
+      enum "Untrust" {
+        description
+          "Untrust-policy";
+      }
+    }
+    description
+      "Type of an ARP import policy.";
+  }
+  typedef arpBridgeType {
+    type enumeration {
+      enum "Vlan" {
+        description
+          "VLAN";
+      }
+      enum "BD" {
+        description
+          "BD";
+      }
+    }
+    description
+      "Type of an ARP bridge domain.";
+  }
+  typedef arpFixType {
+    type enumeration {
+      enum "FixAll" {
+        description
+          "Fixed ARP in fixed-all mode.";
+      }
+      enum "FixMac" {
+        description
+          "Fixed ARP in fixed-MAC mode.";
+      }
+      enum "SendAck" {
+        description
+          "Fixed ARP in send-ack mode.";
+      }
+      enum "NoFix" {
+        description
+          "Disable the anti-attack function for fixed ARP in all modes.";
+      }
+    }
+    description
+      "Type of an ARP Fix.";
+  }
+  typedef arpMffPortType {
+    type enumeration {
+      enum "No-config" {
+        description
+          "No MFF port functions.";
+      }
+      enum "Networt-port" {
+        description
+          "Network-side interface.";
+      }
+      enum "Isolate-port" {
+        description
+          "User-isolate interface.";
+      }
+    }
+    description
+      "Type of an ARP Mff Port type.";
+  }
+  typedef arpIpConflictType {
+    type enumeration {
+      enum "local-IP-conflict" {
+        description
+          "The IP address of a local device is in conflict with that of another device.";
+      }
+      enum "remote-IP-conflict" {
+        description
+          "The local device serving as an access device detects that the IP addresses of its attached devices or of user terminals are in conflict.";
+      }
+      enum "local-ce-IP-conflict" {
+        description
+          "In a heterogeneous interworking scenario, a PE detects that its connected CE's IP or MAC address is different from that configured on the PE using the local-ce ip or local-ce mac command.
+";
+      }
+    }
+    description
+      "Type of an ARP IP Conflict.";
+  }
+  typedef arpTrackOpCodeType {
+    type enumeration {
+      enum "Delete" {
+        description
+          "Deletion.";
+      }
+      enum "Modify" {
+        description
+          "Modification.";
+      }
+    }
+    description
+      "Type of an ARP track operation code.";
+  }
+  typedef arpMffStatFlagType {
+    type enumeration {
+      enum "STATIC" {
+        description
+          "Static user type.";
+      }
+      enum "DYNAMIC" {
+        description
+          "Dynamic user type.";
+      }
+    }
+    description
+      "Type of an ARP Mff statistic Flag type.";
+  }
+  typedef arpL2ProxyFlagType {
+    type enumeration {
+      enum "STATIC" {
+        description
+          "Static Layer 2 proxy ARP type.";
+      }
+      enum "DYNAMIC" {
+        description
+          "Dynamic Layer 2 proxy ARP type.";
+      }
+      enum "CONFLICT" {
+        description
+          "Conflicting Layer 2 proxy ARP type.";
+      }
+    }
+    description
+      "Type of an ARP L2 Proxy Flag type.";
+  }
+}

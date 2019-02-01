@@ -1,0 +1,326 @@
+/*
+Copyright (C) 2013-2018 Huawei Technologies Co., Ltd. All rights reserved.
+*/
+submodule huawei-arp-action {
+  belongs-to huawei-arp {
+    prefix arp;
+  }
+  import huawei-pub-type {
+    prefix pub-type;
+  }
+  import ietf-inet-types {
+    prefix inet;
+  }
+  import huawei-extension {
+    prefix ext;
+  }
+  include huawei-arp-type;
+  
+  organization
+    "Huawei Technologies Co., Ltd.";
+  contact
+    "Huawei Industrial Base Bantian, Longgang Shenzhen 518129                    
+        People's Republic of China                    
+        Website: http://www.huawei.com Email: support@huawei.com";
+  description
+    "ARP action.";
+  revision 2018-06-11 {
+    description
+      "The modifications in the schema file are synchronized to the YANG file.";
+    reference
+      "Huawei private.";
+  }
+  revision 2017-12-23 {
+    description
+      "The modifications in the schema file are synchronized to the YANG file.";
+    reference
+      "Huawei private.";
+  }
+  revision 2017-03-23 {
+    description
+      "Functions supported by the schema are added to the YANG file.";
+    reference
+      "Huawei private.";
+  }
+  revision 2013-01-01 {
+    description
+      "Init revision";
+    reference
+      "Huawei private.";
+  }
+  rpc clearArp {
+    description
+      "Clear ARP entries by type.";
+    ext:node-ref "/arp/arpTables/arpTable";
+    input {
+      leaf clearArpType {
+        type arpClearArpType;
+        default "ClearDynamicArp";
+        description
+          "Types of ARP entries to be cleared. The available options are dynamic and remote backup ARP entries.";
+      }
+    }
+  }
+  rpc clearArpByIfName {
+    description
+      "Clear ARP entries on an interface. Currently, only dynamic ARP entries on an interface can be cleared.";
+    ext:node-ref "/arp/arpTables/arpTable";
+    input {
+      leaf ifName {
+        type pub-type:ifName;
+        mandatory true;
+        description
+          "Name of an interface where ARP entries to be cleared reside.";
+      }
+      leaf ipAddrValue {
+        type inet:ipv4-address-no-zone;
+        description
+          "IP address with which the ARP entries are to be cleared.";
+      }
+    }
+  }
+  rpc clearArpByVpn {
+    description
+      "Clear dynamic ARP entries by VPN instance.";
+    ext:node-ref "/arp/arpTables/arpTable";
+    input {
+      leaf vrfName {
+        type pub-type:vrfName;
+        mandatory true;
+        description
+          "Name of the VPN instance where the ARP entries to be cleared reside.";
+      }
+    }
+  }
+  rpc clearBackupArpByIf {
+    description
+      "Clear remote backup ARP entries on an interface. ";
+    ext:node-ref "/arp/arpTables/arpTable";
+    input {
+      leaf ifName {
+        type pub-type:ifName;
+        mandatory true;
+        description
+          "Name of an interface where ARP entries to be cleared reside.";
+      }
+    }
+  }
+  rpc clearArpBySlot {
+    description
+      "Clear ARP entries on the board in a specified slot. Currently, only dynamic ARP entries on the board in a specified slot can be cleared.";
+    ext:node-ref "/arp/arpTables/arpTable";
+    input {
+      leaf slotId {
+        type string {
+          length "1..24";
+        }
+        description
+          "Slot ID of the board where ARP entries to be cleared reside.";
+      }
+    }
+  }
+  rpc resetAllStatistics {
+    description
+      "Clear all ARP statistics.";
+    ext:node-ref "/arp/arpStatisticss/arpStatistics";
+  }
+  rpc resetStatistics {
+    description
+      "Clear ARP statistics based on specific conditions. Currently, ARP statistics can be cleared only based on the Slot ID.";
+    ext:node-ref "/arp/arpStatisticss/arpStatistics";
+    input {
+      leaf slotId {
+        type string {
+          length "1..24";
+        }
+        description
+          "Slot ID of the interface board where ARP statistics to be cleared reside.";
+      }
+    }
+  }
+  rpc resetAllIfStat {
+    description
+      "Clear ARP statistics on all interfaces.";
+    ext:node-ref "/arp/arpIfStats/arpIfStat";
+  }
+  rpc resetIfStat {
+    description
+      "Clear ARP statistics on an interface.";
+    ext:node-ref "/arp/arpIfStats/arpIfStat";
+    input {
+      leaf ifName {
+        type pub-type:ifName;
+        mandatory true;
+        description
+          "Name of an interface where ARP statistics to be cleared reside.";
+      }
+    }
+  }
+  rpc resetArpOpenFlowEntry {
+    description
+      "reset Arp OpenFlow Entry";
+    input {
+      leaf vni {
+        type uint32 {
+          range "1..16777215";
+        }
+        mandatory true;
+        description
+          "Vxlan VNI";
+      }
+      leaf ipAddr {
+        type inet:ipv4-address-no-zone;
+        mandatory true;
+        description
+          "IP address, in dotted decimal notation.";
+      }
+    }
+  }
+  rpc resetAllArpOpenFlowTable {
+    description
+      "reset All Arp OpenFlowTable";
+  }
+  rpc arpSendDetect {
+    description
+      "Sent ARP probe packets.";
+    ext:node-ref "/arp/arpInterfaces/arpInterface";
+    input {
+      leaf ipAddr {
+        type inet:ipv4-address-no-zone ;
+        mandatory true;
+        description
+          "IP address.";
+      }
+      leaf macAddr {
+        type pub-type:macAddress;
+        mandatory true;
+        description
+          "MAC address.";
+      }
+      leaf ifName {
+        type pub-type:ifName;
+        mandatory true;
+        description
+          "Name of an interface.";
+      }
+      leaf vlanId {
+        type uint16 {
+          range "1..4094";
+        }
+        description
+          "VLAN ID.";
+      }
+      leaf ceVlanId {
+        type uint16 {
+          range "1..4094";
+        }
+        description
+          "Outer VLAN ID.";
+      }
+    }
+  }
+  rpc resetArpBdStat {
+    description
+      "Clearance of ARP packet statistics in a BD.";
+    ext:node-ref "/arp/arpBdStatisticss/arpBdStatistics";
+    input {
+      leaf bdId {
+        type uint32 {
+          range "1..16777215";
+        }
+        mandatory true;
+        description
+          "Bridge domain ID.";
+      }
+    }
+  }
+  rpc resetMffStat {
+    description
+      "Clearance of MFF dynamic user entry statistics.";
+    ext:node-ref "/arp/arpMffStatisticss/arpMffStatistics";
+    input {
+      leaf vlanId {
+        type uint16 {
+          range "1..4094";
+        }
+        mandatory true;
+        description
+          "VLAN ID.";
+      }
+      leaf ipAddr {
+        type inet:ipv4-address-no-zone;
+        description
+          "IP address, in dotted decimal notation.";
+      }
+      leaf ifName {
+        type pub-type:ifName;
+        description
+          "Name of an interface on which MFF statistics is to be cleared.";
+      }
+    }
+  }
+  rpc resetArpAntiattaStat {
+    description
+      "Clearance of ARP anti-attack statistics.";
+    ext:node-ref "/arp/arpAntiAttaStats/arpAntiAttaStat";
+    input {
+      leaf arpType {
+        type boolean;
+        description
+          "ARP packet type.";
+      }
+      leaf arpMissType {
+        type boolean;
+        description
+          "ARP Miss message type.";
+      }
+    }
+  }
+  rpc resetArpL2Proxy {
+    description
+      "Clearance of Layer 2 proxy ARP statistics.";
+    ext:node-ref "/arp/arpL2ProxyStats/arpL2ProxyStat";
+    input {
+      leaf vlanId {
+        type uint16 {
+          range "1..4094";
+        }
+        mandatory true;
+        description
+          "VLAN ID.";
+      }
+      leaf ipAddr {
+        type inet:ipv4-address-no-zone;
+        description
+          "IP address.";
+      }
+      leaf ifName {
+        type pub-type:ifName;
+        description
+          "Interface name.";
+      }
+    }
+  }
+  rpc resetArpCache {
+    description
+      "Clearance of cached ARP entries.";
+    ext:node-ref "/arp/arpCacheEvnStats/arpCacheEvnStat";
+    input {
+      leaf evnName {
+        type string {
+          length "1..31";
+        }
+        mandatory true;
+        description
+          "EVN instance name.";
+      }
+      leaf vlanId {
+        type uint16 {
+          range "1..4094";
+        }
+        description
+          "VLAN ID.";
+      }
+    }
+  }
+}

@@ -1,0 +1,272 @@
+module huawei-arp-deviations-ATN-980B {
+  namespace "http://www.huawei.com/netconf/vrp/huawei-arp-deviations-ATN-980B";
+  prefix arp-devs-ATN-980B;
+
+  import huawei-arp {
+    prefix arp;
+  }
+
+  organization
+    "Huawei Technologies Co., Ltd.";
+  contact
+    "Huawei Industrial Base Bantian, Longgang Shenzhen 518129                    
+        People's Republic of China                    
+        Website: http://www.huawei.com Email: support@huawei.com";
+  description
+    "Address Resolution Protocol (ARP) management, which includes static ARP configuration, dynamic ARP learning, ARP security configuration, ARP entry query, and packet statistics collection.";
+
+  revision 2018-06-11 {
+    description
+      "The modifications in the schema file are synchronized to the YANG file.";
+    reference "Huawei private.";
+  }
+  revision 2017-12-23 {
+    description
+      "The modifications in the schema file are synchronized to the YANG file.";
+    reference "Huawei private.";
+  }
+  revision 2017-03-23 {
+    description
+      "Functions supported by the schema are added to the YANG file.";
+    reference "Huawei private.";
+  }
+  revision 2013-01-01 {
+    description
+      "Init revision";
+    reference "Huawei private.";
+  }
+
+  typedef arpStyleType-deviations {
+    type enumeration {
+      enum "StaticArp" {
+        description
+          "Static ARP entry.";
+      }
+      enum "DynamicArp" {
+        description
+          "Dynamic ARP entry.";
+      }
+      enum "BackupArp" {
+        description
+          "Remote backup ARP entry.";
+      }
+      enum "InterfaceArp" {
+        description
+          "Interface ARP entry.";
+      }
+      enum "RedirectArp" {
+        description
+          "Redirect ARP.";
+      }
+    }
+    description
+      "Type of an ARP entry.";
+  }
+
+  typedef arpSuppIpType-deviations {
+    type enumeration {
+      enum "Dest_Ip" {
+        description
+          "Destination-IP-based timestamp suppression.";
+      }
+      enum "Src_Ip" {
+        description
+          "Source-IP-based timestamp suppression.";
+      }
+    }
+    description
+      "ARP suppression based on IP address type.";
+  }
+
+  deviation "/arp:arp/arp:arpTables/arp:arpTable/arp:styleType" {
+    deviate replace {
+      type arp-devs-ATN-980B:arpStyleType-deviations;
+    }
+  }
+  deviation "/arp:arp/arp:arpBdTables" {
+    deviate not-supported;
+  }
+  deviation "/arp:arp/arp:arpDupMacTables" {
+    deviate not-supported;
+  }
+  deviation "/arp:arp/arp:arpEntryStatisticss" {
+    deviate not-supported;
+  }
+  deviation "/arp:arp/arp:arpFailTables" {
+    deviate not-supported;
+  }
+  deviation "/arp:arp/arp:arpGlobalSpeedLimits" {
+    deviate not-supported;
+  }
+  deviation "/arp:arp/arp:arpIfStats/arp:arpIfStat/arp:arpBatchState" {
+    deviate not-supported;
+  }
+  deviation "/arp:arp/arp:arpIfStats/arp:arpIfStat/arp:arpExceedFlag" {
+    deviate not-supported;
+  }
+  deviation "/arp:arp/arp:arpInterfaces/arp:arpInterface/arp:anywayProxyEnable" {
+    deviate not-supported;
+  }
+  deviation "/arp:arp/arp:arpInterfaces/arp:arpInterface/arp:arpGratuitous" {
+    deviate not-supported;
+  }
+  deviation "/arp:arp/arp:arpInterfaces/arp:arpInterface/arp:arpGratuitousInterval" {
+    deviate not-supported;
+  }
+  deviation "/arp:arp/arp:arpInterfaces/arp:arpInterface/arp:fastDelete" {
+    deviate not-supported;
+  }
+  deviation "/arp:arp/arp:arpInterfaces/arp:arpInterface/arp:importPolicy" {
+    deviate not-supported;
+  }
+  deviation "/arp:arp/arp:arpInterfaces/arp:arpInterface/arp:ifArpCheckType" {
+    deviate not-supported;
+  }
+  deviation "/arp:arp/arp:arpInterfaces/arp:arpInterface/arp:ifGratuitousArpDrop" {
+    deviate not-supported;
+  }
+  deviation "/arp:arp/arp:arpInterfaces/arp:arpInterface/arp:l2ProxyUserIsoEnable" {
+    deviate not-supported;
+  }
+  deviation "/arp:arp/arp:arpInterfaces/arp:arpInterface/arp:mffPortType" {
+    deviate not-supported;
+  }
+  deviation "/arp:arp/arp:arpOpenFlowTables" {
+    deviate not-supported;
+  }
+  deviation "/arp:arp/arp:arpStaticTables/arp:arpStaticTable/arp:peerAddr" {
+    deviate not-supported;
+  }
+  deviation "/arp:arp/arp:arpStaticTables/arp:arpStaticTable/arp:sourceAddr" {
+    deviate not-supported;
+  }
+  deviation "/arp:arp/arp:arpStaticTables/arp:arpStaticTable/arp:peerV6Addr" {
+    deviate not-supported;
+  }
+  deviation "/arp:arp/arp:arpStaticTables/arp:arpStaticTable/arp:srcV6Addr" {
+    deviate not-supported;
+  }
+  deviation "/arp:arp/arp:arpStaticTables/arp:arpStaticTable/arp:vni" {
+    deviate not-supported;
+  }
+  deviation "/arp:arp/arp:arpSystemInfo/arp:arpGatewayDupEnable" {
+    deviate not-supported;
+  }
+  deviation "/arp:arp/arp:arpSystemInfo/arp:arpGratuitous" {
+    deviate not-supported;
+  }
+  deviation "/arp:arp/arp:arpSystemInfo/arp:arpGratuitousInterval" {
+    deviate not-supported;
+  }
+  deviation "/arp:arp/arp:arpSystemInfo/arp:arpTimeoutEnable" {
+    deviate not-supported;
+  }
+  deviation "/arp:arp/arp:arpSystemInfo/arp:expireTime" {
+    deviate not-supported;
+  }
+  deviation "/arp:arp/arp:arpSystemInfo/arp:arpFowardingInfo" {
+    deviate not-supported;
+  }
+  deviation "/arp:arp/arp:arpSystemInfo/arp:arpEvnCfg" {
+    deviate not-supported;
+  }
+  deviation "/arp:arp/arp:arpSystemInfo/arp:gArpCheckType" {
+    deviate not-supported;
+  }
+  deviation "/arp:arp/arp:arpSystemInfo/arp:gGratuitousArpDrop" {
+    deviate not-supported;
+  }
+  deviation "/arp:arp/arp:arpSystemInfo/arp:gMffEnable" {
+    deviate not-supported;
+  }
+  deviation "/arp:arp/arp:arpSystemInfo/arp:gSrcMacCheck" {
+    deviate not-supported;
+  }
+  deviation "/arp:arp/arp:arpSystemInfo/arp:ipConflictDetectEnable" {
+    deviate not-supported;
+  }
+  deviation "/arp:arp/arp:arpTables/arp:arpTable/arp:peerAddr" {
+    deviate not-supported;
+  }
+  deviation "/arp:arp/arp:arpTables/arp:arpTable/arp:sourceAddr" {
+    deviate not-supported;
+  }
+  deviation "/arp:arp/arp:arpTables/arp:arpTable/arp:vni" {
+    deviate not-supported;
+  }
+  deviation "/arp:arp/arp:arpInterfaces/arp:arpInterface/arp:arpDualSendIntf" {
+    deviate not-supported;
+  }
+  deviation "/arp:arp/arp:arpIfLimits/arp:arpIfLimit/arp:threValue" {
+    deviate not-supported;
+  }
+  deviation "/arp:arp/arp:arpMffVlanCfgs" {
+    deviate not-supported;
+  }
+  deviation "/arp:arp/arp:arpVlanSecurityTables" {
+    deviate not-supported;
+  }
+  deviation "/arp:arp/arp:arpMffStatisticss" {
+    deviate not-supported;
+  }
+  deviation "/arp:arp/arp:arpCacheEvnStats" {
+    deviate not-supported;
+  }
+  deviation "/arp:arp/arp:arpVlanRateLimitTables" {
+    deviate not-supported;
+  }
+  deviation "/arp:arp/arp:arpAntiAttaStats" {
+    deviate not-supported;
+  }
+  deviation "/arp:arp/arp:arpL2ProxyStats" {
+    deviate not-supported;
+  }
+  deviation "/arp:resetAllArpOpenFlowTable" {
+    deviate not-supported;
+  }
+  deviation "/arp:resetArpOpenFlowEntry" {
+    deviate not-supported;
+  }
+  deviation "/arp:resetMffStat" {
+    deviate not-supported;
+  }
+  deviation "/arp:resetArpCache" {
+    deviate not-supported;
+  }
+  deviation "/arp:resetArpAntiattaStat" {
+    deviate not-supported;
+  }
+  deviation "/arp:resetArpL2Proxy" {
+    deviate not-supported;
+  }
+  deviation "/arp:arp/arp:arpTables/arp:arpTable/arp:styleType" {
+    deviate add {
+      must "not(../styleType!='StaticArp' and ../styleType!='InterfaceArp') or (../styleType!='StaticArp' and ../styleType!='InterfaceArp' and (../styleType='StaticArp') ) or (../styleType!='StaticArp' and ../styleType!='InterfaceArp')";
+    }
+  }
+  deviation "/arp:arp/arp:arpBds/arp:arpBd/arp:arpBroadcastSuppEnable" {
+    deviate not-supported;
+  }
+  deviation "/arp:arp/arp:arpBds/arp:arpBd/arp:arpL2ProxyGWEnable" {
+    deviate not-supported;
+  }
+  deviation "/arp:arp/arp:arpBds/arp:arpBd/arp:arpBroadcastDiscardEnable" {
+    deviate not-supported;
+  }
+  deviation "/arp:arp/arp:arpBdStatisticss/arp:arpBdStatistics/arp:rcvProxyPkt" {
+    deviate not-supported;
+  }
+  deviation "/arp:arp/arp:arpBdStatisticss/arp:arpBdStatistics/arp:rcvMisDisc" {
+    deviate not-supported;
+  }
+  deviation "/arp:arp/arp:arpBdStatisticss/arp:arpBdStatistics/arp:sndProxyPkt" {
+    deviate not-supported;
+  }
+  deviation "/arp:resetArpBdStat/arp:input/arp:bdId" {
+    deviate replace {
+      type uint32 {
+        range "1..32768";
+      }
+    }
+  }
+}

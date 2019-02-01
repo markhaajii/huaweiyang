@@ -1,0 +1,458 @@
+/*
+Copyright (C) 2013-2018 Huawei Technologies Co., Ltd. All rights reserved.
+*/
+submodule huawei-arp-notification{
+  belongs-to huawei-arp{
+    prefix arp;
+  }
+  import ietf-yang-types{
+    prefix yang;
+  }
+  import ietf-inet-types{
+    prefix inet;
+  }
+  organization
+    "Huawei Technologies Co., Ltd.";
+  contact
+    "Huawei Industrial Base Bantian, Longgang Shenzhen 518129 People's Republic of China Website: http://www.huawei.com Email: support@huawei.com";
+  description
+    "notification of arp";
+  revision 2018-06-11 {
+    description
+      "The modifications in the schema file are synchronized to the YANG file.";
+    reference
+      "Huawei private.";
+  }
+  revision 2017-12-23 {
+    description
+      "The modifications in the schema file are synchronized to the YANG file.";
+    reference
+      "Huawei private.";
+  }
+  revision 2017-03-23 {
+    description
+      "Functions supported by the schema are added to the YANG file.";
+    reference
+      "Huawei private.";
+  }
+  revision 2013-01-01 {
+    description
+      "Init revision";
+    reference
+      "Huawei private.";
+  }
+  notification hwEthernetARPMACIPConflictResolved{
+    description
+      "MAC and IP address confliction resolved. (Conflict interface=[LogicIfName], Conflict MAC address=[ConflictMAC], Conflict IP address=[ConflictIP])";
+    leaf DstMAC{
+      type yang:mac-address;
+	  description
+        "Destination MAC addresses of the received ARP packets.";
+    }
+    leaf PhyIfName{
+      type string;
+	  description
+        "Interface that receives ARP packets.";
+    }
+    leaf DstIP{
+      type inet:ipv4-address-no-zone;
+	  description
+        "Destination IP addresses of the received ARP packets.";
+    }
+    leaf ConflictIP{
+      type inet:ipv4-address-no-zone;
+	  description
+        "Source IP addresses of the received ARP packets.";
+    }
+    leaf Vlan{
+      type uint32;
+	  description
+        "Outer vlan tag of the received ARP packets.";
+    }
+    leaf ConflictMAC{
+      type yang:mac-address;
+	  description
+        "Source MAC addresses of the received ARP packets.";
+    }
+    leaf Ce-vlan{
+      type uint32;
+	  description
+        "Inner vlan tag of the received ARP packets.";
+    }
+    leaf LogicIfName{
+      type string;
+	  description
+        "Name of the conflict interface where the conflict is detected.";
+    }
+  }
+  notification hwEthernetARPMACIPConflict{
+    description
+      "MAC and IP address conflict. (Conflict interface=[LogicIfName], Conflict MAC address=[ConflictMAC], Conflict IP address=[ConflictIP], Received packet's destination MAC address=[DstMAC], Received packet's destination IP address=[DstIP], Received packet's VLAN=[Vlan], Received packet's CE-VLAN=[Ce-vlan], Input interface=[PhyIfName])";
+    leaf DstMAC{
+      type yang:mac-address;
+	  description
+        "Destination MAC addresses of the received ARP packets.";
+    }
+    leaf PhyIfName{
+      type string;
+	  description
+        "Interface that receives ARP packets.";
+    }
+    leaf DstIP{
+      type inet:ipv4-address-no-zone;
+	  description
+        "Destination IP addresses of the received ARP packets.";
+    }
+    leaf ConflictIP{
+      type inet:ipv4-address-no-zone;
+	  description
+        "Source IP addresses of the received ARP packets.";
+    }
+    leaf Vlan{
+      type uint32;
+	  description
+        "Outer vlan tag of the received ARP packets.";
+    }
+    leaf ConflictMAC{
+      type yang:mac-address;
+	  description
+        "Source MAC addresses of the received ARP packets.";
+    }
+    leaf Ce-vlan{
+      type uint32;
+	  description
+        "Inner vlan tag of the received ARP packets.";
+    }
+    leaf LogicIfName{
+      type string;
+	  description
+        "Name of the conflict interface where the conflict is detected.";
+    }
+  }
+  notification hwEthernetARPThresholdExceedAlarm{
+    description
+      "The number of ARP entries exceeded the threshold. (entPhysicalIndex=[entPhysicalIndex], Slot name=[slotname], Threshold=[Threshold], Number of dynamic ARP entries=[DynEntries], Number of static ARP entries=[StatEntries])";
+    leaf StatEntries{
+      type uint32;
+	  description
+        "Indicates the number of static ARP entries.";
+    }
+    leaf DynEntries{
+      type uint32;
+	  description
+        "Indicates the number of dynamic ARP entries.";
+    }
+    leaf entPhysicalIndex{
+      type uint32;
+	  description
+        "Indicates the index of the physical entity.";
+    }
+    leaf Threshold{
+      type uint32;
+	  description
+        "Indicates the alarm threshold.";
+    }
+    leaf slotname{
+      type string;
+	  description
+        "Indicates the board name.";
+    }
+  }
+  notification hwEthernetARPThresholdResumeAlarm{
+    description
+      "The number of ARP entries was restored to the threshold. (entPhysicalIndex=[entPhysicalIndex], Slot name=[slotname], Threshold=[Threshold], Number of dynamic ARP entries=[DynEntries], Number of static ARP entries=[StatEntries])";
+    leaf StatEntries{
+      type uint32;
+	  description
+        "Indicates the number of static ARP entries.";
+    }
+    leaf DynEntries{
+      type uint32;
+	  description
+        "Indicates the number of dynamic ARP entries.";
+    }
+    leaf entPhysicalIndex{
+      type uint32;
+	  description
+        "Indicates the index of the physical entity.";
+    }
+    leaf Threshold{
+      type uint32;
+	  description
+        "Indicates the alarm threshold.";
+    }
+    leaf slotname{
+      type string;
+	  description
+        "Indicates the board name.";
+    }
+  }
+    notification hwEthernetARPLimitExceed{
+    description
+      "The number of ARP entries learned on the interface exceeded the threshold. (Interface name=[InterfaceName], Maximum number of ARP entries=[LimitNumber], Number of learned ARP entries=[LearnedNumber])";
+    leaf InterfaceName{
+      type string;
+	  description
+        "Interface name.";
+    }
+    leaf LimitNumber{
+      type uint32;
+	  description
+        "Maximum number of ARP entries.";
+    }
+    leaf LearnedNumber{
+      type uint32;
+	  description
+        "Number of learned ARP entries.";
+    }
+    leaf RecoverReason{
+      type string;
+	  description
+        "Reason for clearing the alarm.";
+    }
+  }
+  notification hwEthernetARPLimitExceedResume{
+    description
+      "The number of ARP entries learned on the interface fell below the threshold. (Interface name=[InterfaceName], Maximum number of ARP entries=[LimitNumber], Number of learned ARP entries =[LearnedNumber], Reason for clearing the alarm=[RecoverReason])";
+    leaf InterfaceName{
+      type string;
+	  description
+        "Interface name.";
+    }
+    leaf LimitNumber{
+      type uint32;
+	  description
+        "Maximum number of ARP entries.";
+    }
+    leaf LearnedNumber{
+      type uint32;
+	  description
+        "Number of learned ARP entries.";
+    }
+    leaf RecoverReason{
+      type string;
+	  description
+        "Reason for clearing the alarm.";
+    }
+  }
+  notification hwArpsGatewayConflict{
+    description
+      "An gateway conflict is detected by ARP.";
+	leaf InterfaceName{
+      type string;
+	  description
+        "Indicates Interface name.";
+    }
+    leaf IpAddress{
+      type inet:ipv4-address-no-zone;
+	  description
+        "Indicates Ip Address.";
+    }
+    leaf MacAddress{
+      type yang:mac-address;
+	  description
+        "Indicates Mac Address.";
+    }
+    leaf PeVLAN{
+      type uint32;
+	  description
+        "Inner Pe-VLAN.";
+    }
+    leaf CeVLAN{
+      type uint32;
+	  description
+        "Inner vlan tag of the received ARP packets.";
+    }
+  }
+  notification hwEthernetARPIPConflictEvent{
+    description
+      "An IP address conflict is detected by ARP.";
+    leaf IpAddr{
+      type inet:ipv4-address-no-zone;
+	  description
+        "Source IP addresses of the received ARP packets.";
+    }
+    leaf LocalMacAddr{
+      type yang:mac-address;
+	  description
+        "Interface recorded in the ARP entry of the IP address.";
+    }
+    leaf LocalIfName{
+      type string;
+	  description
+        "Source MAC address recorded in the ARP entry of the IP address..";
+    }
+    leaf LocalPVid{
+      type uint32;
+	  description
+        "VLAN recorded in the ARP entry of the IP address.";
+    }
+    leaf LocalCVid{
+      type uint32;
+	  description
+        "INNER-VLAN recorded in the ARP entry of the IP address.";
+    }
+    leaf RcvMacAddr{
+      type yang:mac-address;
+	  description
+        "Inbound interface of the second ARP packet with the IP address.";
+    }
+    leaf RcvIfName{
+      type string;
+	  description
+        "Source MAC address of the second ARP packet with the IP address.";
+    }
+    leaf RcvPVid{
+      type uint32;
+	  description
+        "VLAN configured on the inbound interface of the second ARP packet with the IP address.";
+    }
+    leaf RcvCVid{
+      type uint32;
+	  description
+        "INNER-VLAN configured on the inbound interface of the second ARP packet with the IP address.";
+    }
+    leaf type{
+      type string;
+	  description
+        "IP address conflict type.";
+    }
+  }
+  notification hwEthernetARPSpeedLimitAlarm{
+    description
+      "The transmit rate of ARP packets or ARP Miss messages exceeded the configured rate limit.";
+    leaf IfIndex{
+      type uint32;
+	  description
+        "Interface index.";
+    }
+    leaf SupValue{
+      type uint32;
+	  description
+        "Rate limit of ARP packets or ARP Miss messages.";
+    }
+    leaf CurValue{
+      type uint32;
+	  description
+        "Current transmit rate of ARP packets or ARP Miss messages.";
+    }
+    leaf SupType{
+      type string;
+	  description
+        "Type of packets that are suppressed: ARP packets or ARP Miss messages.";
+    }
+    leaf SrcIp{
+      type inet:ipv4-address-no-zone;
+	  description
+        "Source IP addresses of ARP packets or ARP Miss messages.";
+    }
+    leaf DstIp{
+      type inet:ipv4-address-no-zone;
+	  description
+        "Destination IP addresses of ARP packets or ARP Miss messages.";
+    }
+    leaf VpnName{
+      type string;
+	  description
+        "VPN instances that ARP packets or ARP Miss messages belong to.";
+    }
+  }
+  notification hwARPBDHostConflictAlarm{
+    description
+      "Host IP address conflicted. (LocalIPAddress=[LocalIP], LocalBDID=[LocalBDId], LocalMAC=[LocalMAC], RemoteIPAddress=[ConflictIP], RemoteBDID=[RemoteBDId], RemoteMAC=[RemoteMAC], LocalInterface=[LocalInterface], RemoteInterface=[RemoteInterface], TunnelPeer=[TunnelPeer])";
+    leaf LocalIP{
+      type inet:ipv4-address-no-zone;
+	  description
+        "local IP address.";
+    }
+    leaf LocalBDId{
+      type uint32;
+	  description
+        "Local bridge domain.";
+    }
+    leaf LocalMAC{
+      type yang:mac-address;
+	  description
+        "Local MAC.";
+    }
+    leaf ConflictIP{
+      type inet:ipv4-address-no-zone;
+	  description
+        "Conflict IP address.";
+    }
+    leaf RemoteBDId{
+      type uint32;
+	  description
+        "Remote bridge domain.";
+    }
+    leaf RemoteMAC{
+      type yang:mac-address;
+	  description
+        "Remote MAC.";
+    }
+    leaf LocalInterface{
+      type string;
+	  description
+        "Local interface.";
+    }
+    leaf RemoteInterface{
+      type string;
+	  description
+        "Remote interface.";
+    }
+    leaf TunnelPeer{
+      type inet:ipv4-address-no-zone;
+	  description
+        "Tunnel peer IP address.";
+    }
+  }
+  notification hwARPBDHostConflictResume{
+    description
+      "Host IP address confliction resolved. (LocalIPAddress=[LocalIP], LocalBDID=[LocalBDId], LocalMAC=[LocalMAC], RemoteIPAddress=[ConflictIP], RemoteBDID=[RemoteBDId], RemoteMAC=[RemoteMAC], LocalInterface=[LocalInterface], RemoteInterface=[RemoteInterface], TunnelPeer=[TunnelPeer])";
+    leaf LocalIP{
+      type inet:ipv4-address-no-zone;
+	  description
+        "local IP address.";
+    }
+    leaf LocalBDId{
+      type uint32;
+	  description
+        "Local bridge domain.";
+    }
+    leaf LocalMAC{
+      type yang:mac-address;
+	  description
+        "Local MAC.";
+    }
+    leaf ConflictIP{
+      type inet:ipv4-address-no-zone;
+	  description
+        "Conflict IP address.";
+    }
+    leaf RemoteBDId{
+      type uint32;
+	  description
+        "Remote bridge domain.";
+    }
+    leaf RemoteMAC{
+      type yang:mac-address;
+	  description
+        "Remote MAC.";
+    }
+    leaf LocalInterface{
+      type string;
+	  description
+        "Local interface.";
+    }
+    leaf RemoteInterface{
+      type string;
+	  description
+        "Remote interface.";
+    }
+    leaf TunnelPeer{
+      type inet:ipv4-address-no-zone;
+	  description
+        "Tunnel peer IP address.";
+    }
+  }
+}

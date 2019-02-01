@@ -1,0 +1,2127 @@
+/*
+Copyright (C) 2013-2018 Huawei Technologies Co., Ltd. All rights reserved.
+*/
+module huawei-arp {
+  namespace "http://www.huawei.com/netconf/vrp/huawei-arp";
+  prefix arp;
+  import huawei-evc {
+    prefix evc;
+  }
+  import huawei-ifm {
+    prefix ifm;
+  }
+  import huawei-l3vpn {
+    prefix l3vpn;
+  }
+  import huawei-pub-type {
+    prefix pub-type;
+  }
+  import huawei-vlan {
+    prefix vlan;
+  }
+  import ietf-inet-types {
+    prefix inet;
+  }
+  import ietf-yang-types {
+    prefix yang;
+  }
+  import huawei-extension {
+    prefix ext;
+  }
+  include huawei-arp-action;
+  include huawei-arp-method;
+  include huawei-arp-type;
+  include huawei-arp-notification;
+  
+  organization
+    "Huawei Technologies Co., Ltd.";
+  contact
+    "Huawei Industrial Base Bantian, Longgang Shenzhen 518129                    
+        People's Republic of China                    
+        Website: http://www.huawei.com Email: support@huawei.com";
+  description
+    "Address Resolution Protocol (ARP) management, which includes static ARP configuration, dynamic ARP learning, ARP security configuration, ARP entry query, and packet statistics collection.";
+  revision 2018-06-11 {
+    description
+      "The modifications in the schema file are synchronized to the YANG file.";
+    reference
+      "Huawei private.";
+  }
+  revision 2017-12-23 {
+    description
+      "The modifications in the schema file are synchronized to the YANG file.";
+    reference
+      "Huawei private.";
+  }
+  revision 2017-03-23 {
+    description
+      "Functions supported by the schema are added to the YANG file.";
+    reference
+      "Huawei private.";
+  }
+  revision 2013-01-01 {
+    description
+      "Init revision";
+    reference
+      "Huawei private.";
+  }
+  container arp {
+    description
+      "Address Resolution Protocol (ARP) management, which includes static ARP configuration, dynamic ARP learning, ARP security configuration, ARP entry query, and packet statistics collection.";
+    container arpSystemInfo {
+      description
+        "ARP system information configuration.";
+      leaf learnStrictEnable {
+        type boolean;
+        default "false";
+        description
+          "Enable strict ARP learning so that a device learns only address information carried in the ARP Reply messages in response to the ARP Request messages sent by itself.";
+      }
+      leaf l2TopoDetectEnable {
+        type boolean;
+        default "false";
+        description
+          "Enable Layer 2 topology probe. After a Layer 2 interface goes Up, the device updates all ARP entries corresponding to the VLAN to which the Layer 2 interface belongs.";
+      }
+      leaf rateTrapInterval {
+        type uint32 {
+          range "0..1200";
+        }
+        default "0";
+        description
+          "Interval at which ARP logs and traps are recorded. If the value is 0, logs and traps are not recorded.";
+      }
+      leaf arpTimeoutEnable {
+        type boolean;
+        default "false";
+        description
+          "Enable ARP aging. When the life cycle of an ARP entry on an interface reaches the aging time set on the interface, the device sends ARP aging probe messages to the corresponding device. If the device cannot be probed, the ARP entry is deleted. ";
+        ext:allowDelete "true";
+      }
+      leaf arpPassiveLearnEnable {
+        type boolean;
+        default "false";
+        description
+          "Enable passive ARP learning. After the backup device in a VRRP backup group receives an ARP request message destined for the virtual IP address, the backup device learns the ARP entry of the requester.";
+        ext:allowDelete "true";
+      }
+      leaf arpTopoDetectDisable {
+        type boolean;
+        default "false";
+        description
+          "Enable Or Disable Topology Change Disable.";
+        ext:allowDelete "true";
+      }
+      leaf expireTime {
+        type uint32 {
+          range "60..86400";
+        }
+        default "1200";
+        description
+          "Aging time of a dynamic ARP entry. ";
+      }
+      leaf arpGratuitous {
+        type boolean;
+        default "false";
+        description
+          "Enable Or Disable sending gratuitous-arp packet";
+        ext:allowDelete "true";
+      }
+      leaf arpGratuitousInterval {
+        when "../arpGratuitous='true'";        
+		type uint32 {
+          range "1..86400";
+        }
+        default "60";
+        description
+          "The interval of sending gratuitous-arp packet";
+      }
+      leaf arpGatewayDupEnable {
+        type boolean;
+        default "false";
+        description
+          "Enable Or Disable Gateway duplicate ";
+        ext:allowDelete "true";
+      }
+      leaf conSendEnable {
+        type boolean;
+        default "false";
+        description
+          "Enable Or Disable ARP packet sending at a limited rate.";
+      }
+      leaf conSendMaxnum {
+        when "not(../conSendEnable='false')";
+        type uint16 {
+          range "1..10";
+        }
+        default "5";
+        description
+          "Maximum packet sending rate, expressed in the number of packets sent every 10 ms.";
+        ext:allowDelete "true";
+      }
+      container arpFowardingInfo {
+        description
+          "ARP forwarding info table, such as static ARP  maxinum";
+        leaf arpMaxStaticTblNum {
+          type uint32 {
+            range "0..65536";
+          }
+          default "16384";
+          description
+            "Set the maximum number of static ARP entries allowed to be configured on a switch.";
+        }
+      }
+      leaf gArpCheckType {
+        type arpFixType;
+        default "NoFix";
+        description
+          "Mode of fixed ARP.";
+      }
+      leaf gGratuitousArpDrop {
+        type boolean;
+        default "false";
+        description
+          "Enable the function to discard gratuitous ARP packets.";
+      }
+      leaf ipConflictDetectEnable {
+        type boolean;
+        default "false";
+        description
+          "Enable IP address conflict check.";
+      }
+      leaf gSrcMacCheck {
+        type boolean;
+        default "false";
+        description
+          "Enable the consistency check of source MAC addresses in ARP packets.";
+      }
+      leaf vlanIfExpireTime {
+        type uint32 {
+          range "60..86400";
+        }
+        default "1200";
+        description
+          "Aging time of a dynamic ARP entry of VLANIF. ";
+      }
+      container arpEvnCfg {
+        description
+          "ARP EVN user configuration.";
+        leaf arpCacheEnable {
+          type boolean;
+          default "false";
+          description
+            "Enable the ARP cache proxy function for EVN users.";
+        }
+        leaf arpCacheTimeout {
+          type uint32 {
+            range "0..1000000";
+          }
+          default "240";
+          description
+            "Set the aging time for ARP cache entries of EVN users.";
+          ext:allowDelete "true";
+        }
+      }
+      leaf gMffEnable {
+        type boolean;
+        default "false";
+        description
+          "Enable MFF globally.";
+      }
+      leaf hostConflictCheckPeriod {
+        type uint16 {
+          range "2..36000";
+        }
+        default "180";
+        description
+          "Period configurations for the host conflict.";
+      }
+      leaf hostConflictThreshold {
+        type uint16 {
+          range "1..1000";
+        }
+        default "5";
+        description
+          "Retry times configurations for the host conflict.";
+      }
+    }
+    container arpStaticTables {
+      description
+        "List of static ARP configurations.";
+      list arpStaticTable {
+        key "vrfName ipAddr";
+        description
+          "Static ARP table. By default, the system ARP table is empty, and address mappings are obtained using dynamic ARP.";
+        leaf vrfName {
+          type leafref {
+            path "/l3vpn:l3vpn/l3vpn:l3vpncomm/l3vpn:l3vpnInstances/l3vpn:l3vpnInstance/l3vpn:vrfName";
+          }
+          description
+            "Name of a VPN instance. This parameter is used to support the MPLS VPN feature. If this parameter is set, it indicates that the ARP entry is in the associated VLAN.";
+          ext:support-filter "true";
+        }
+        leaf ipAddr {
+          type inet:ipv4-address-no-zone;
+          description
+            "IP address, in dotted decimal notation.";
+        }
+        leaf macAddr {
+          type pub-type:macAddress;
+          mandatory true;
+          description
+            "MAC address in the format of H-H-H, in which H is a hexadecimal number of 1 to 4 bits. ";
+        }
+        leaf ifName {
+          type leafref {
+            path "/ifm:ifm/ifm:interfaces/ifm:interface/ifm:ifName";
+          }
+          description
+            "Name of the ARP outbound interface.";
+          ext:allowDelete "true";
+        }
+        leaf peVid {
+          type uint16 {
+            range "1..4094";
+          }
+          description
+            "Outer VLAN ID. If this parameter is not set, the VLAN ID is considered to be 0. If this parameter is set, the ARP entry is in the specified VLAN.";
+          ext:allowDelete "true";
+        }
+        leaf ceVid {
+          type uint16 {
+            range "1..4094";
+          }
+          description
+            "Inner VLAN ID. If this parameter is not set, the VLAN ID is considered to be 0. If this parameter is set, the ARP entry is in the specified VLAN.";
+          ext:allowDelete "true";
+        }
+        leaf vni {
+          type uint32 {
+            range "1..16777215";
+          }
+          description
+            "Value of VXLAN Network Identifier.";
+          ext:allowDelete "true";
+        }
+        leaf sourceAddr {
+          type inet:ipv4-address-no-zone;
+          description
+            "Value of Tunnel Source Ip Address.";
+          ext:allowDelete "true";
+        }
+        leaf peerAddr {
+          type inet:ipv4-address-no-zone;
+          description
+            "Value of Tunnel Peer Ip Address.";
+          ext:allowDelete "true";
+        }
+        leaf srcV6Addr {
+          type inet:ipv6-address-no-zone;
+          description
+            "Value of Tunnel Source Ipv6 Address.";
+          ext:allowDelete "true";
+        }
+        leaf peerV6Addr {
+          type inet:ipv6-address-no-zone;
+          description
+            "Value of Tunnel Peer Ipv6 Address.";
+          ext:allowDelete "true";
+        }
+      }
+    }
+    container arpTables {
+      description
+        "List of ARP entries that can be queried.";
+      list arpTable {
+        key "vrfName ipAddr";
+        description
+          "Query ARP entries, including static, dynamic, and interface-based ARP entries.";
+        ext:entry-from "system";
+        leaf vrfName {
+          type leafref {
+            path "/l3vpn:l3vpn/l3vpn:l3vpncomm/l3vpn:l3vpnInstances/l3vpn:l3vpnInstance/l3vpn:vrfName";
+          }
+          description
+            "Name of the VPN instance to which an ARP entry belongs.";
+        }
+        leaf ipAddr {
+          type inet:ipv4-address-no-zone;
+          description
+            "IP address, in dotted decimal notation.";
+        }
+        leaf macAddr {
+          type pub-type:macAddress;
+          config false;
+          description
+            "MAC address in the format of H-H-H, in which H is a hexadecimal number of 1 to 4 bits. ";
+        }
+        leaf expireTime {
+          type uint32 {
+            range "1..1440";
+          }
+          config false;
+          description
+            "Aging time of a dynamic ARP entry. ";
+        }
+        leaf styleType {
+          type arpStyleType;
+          default "StaticArp";
+          description
+            "Type of ARP entries. An ARP entry can be a static, dynamic, remote backup, or interface-based ARP entry and so on.";
+          ext:support-filter "true";
+        }
+        leaf ifName {
+          type leafref {
+            path "/ifm:ifm/ifm:interfaces/ifm:interface/ifm:ifName";
+          }
+          config false;
+          description
+            "Type and number of the interface that has learned ARP entries.";
+          ext:support-filter "true";
+        }
+        leaf slotId {
+          type string {
+            length "1..24";
+          }
+          config false;
+          description
+            "Slot ID.";
+          ext:support-filter "true";
+        }
+        leaf peVid {
+          type uint16 {
+            range "1..4094";
+          }
+          config false;
+          description
+            "ID of the outer VLAN to which an ARP entry belongs.";
+          ext:support-filter "true";
+        }
+        leaf ceVid {
+          type uint16 {
+            range "1..4094";
+          }
+          config false;
+          description
+            "ID of the inner VLAN to which an ARP entry belongs.";
+        }
+        leaf pvc {
+          type uint32;
+          config false;
+          description
+            "Interface where a PVC resides and VPI/VCI. ";
+        }
+        leaf vni {
+          type uint32 {
+            range "1..16777215";
+          }
+          config false;
+          description
+            "Vxlan VNI.";
+        }
+        leaf sourceAddr {
+          type inet:ip-address-no-zone;
+          config false;
+          description
+            "Tunnel  SourceIPAddr.";
+        }
+        leaf peerAddr {
+          type inet:ip-address-no-zone;
+          config false;
+          description
+            "Tunnel  PeerIPAddr.";
+        }
+      }
+    }
+    container arpInterfaces {
+      description
+        "List of ARP Interface configurations.";
+      list arpInterface {
+        key "ifName";
+        description
+          "ARP interface configuration, including the aging time, probe interval, number of aging probe attempts, dynamic ARP learning status, strict ARP learning status, and routed proxy.";
+        ext:entry-from "system";
+        leaf ifName {
+          type pub-type:ifName;
+          description
+            "Name of the interface that has learned dynamic ARP entries.";
+          ext:support-filter "true";
+        }
+        leaf expireTime {
+          type uint32 {
+            range "60..86400";
+          }
+          default "1200";
+          description
+            "Aging time of a dynamic ARP entry.";
+        }
+        leaf probeInterval {
+          type uint32 {
+            range "1..5";
+          }
+          default "5";
+          description
+            "Interval for detecting dynamic ARP entries.";
+        }
+        leaf probeTimes {
+          type uint32 {
+            range "0..10";
+          }
+          default "3";
+          description
+            "Number of aging probe attempts for a dynamic ARP entry. If a device does not receive an ARP reply message after the number of aging probe attempts reaches a specified number, the dynamic ARP entry is deleted.";
+        }
+        leaf arpLearnDisable {
+          type boolean;
+          default "false";
+          description
+            "Whether dynamic ARP learning is disabled. If the value is True, dynamic ARP learning is disabled. If the value is False, dynamic ARP learning is enabled.";
+        }
+        leaf arpLearnStrict {
+          type arpStrictLearn;
+          default "trust";
+          description
+            "Enable strict ARP learning. After strict ARP learning is enabled, a device only learns address information of only the ARP reply message in response to the ARP request sent by itself. Strict ARP learning employs the longest match rule. 1. If strict ARP learning is configured both globally and in the interface view, the strict ARP learning configuration in the interface view is used. 2. If strict ARP learning is not configured in the interface view, the global strict ARP learning configuration is used.";
+        }
+        leaf routeProxyEnable {
+          type boolean;
+          default "false";
+          description
+            "Enable routed proxy ARP. When two hosts reside on different network segments and do not have default gateways configured, IP address resolution between the two hosts can be implemented using routed proxy ARP.";
+        }
+        leaf innerProxyEnable {
+          type boolean;
+          default "false";
+          description
+            "Enable intra-VLAN proxy ARP. Some switches isolate hosts in the same VLAN. To allow hosts in the same VLAN to communicate, enable intra-VLAN proxy ARP.";
+        }
+        leaf interProxyEnable {
+          type boolean;
+          default "false";
+          description
+            "Enable inter-VLAN proxy ARP. If hosts in different VLANs need to communicate at Layer 2, enable inter-VLAN proxy ARP on an interface. Hosts between sub-VLANs in a super VLAN cannot communicate by default. To allow these hosts to communicate, enable inter-VLAN proxy ARP on the VLANIF interface of the super VLAN.";
+        }
+        leaf localProxyEnable {
+          type boolean;
+          default "false";
+          description
+            "Enable local proxy ARP. To allow isolated hosts in a bridge domain (BD) to communicate with each other, enable local proxy ARP.";
+        }
+        leaf fakeExpireTime {
+          type uint32 {
+            range "1..36000";
+          }
+          default "5";
+          description
+            "Aging time of a fake ARP entry.";
+          ext:support-filter "false";
+        }
+        leaf probeUnicast {
+          type boolean;
+          default "false";
+          description
+            "Send unicast ARP aging probe messages for a dynamic ARP entry.";
+          ext:support-filter "false";
+        }
+        leaf dstMacCheck {
+          type boolean;
+          default "false";
+          description
+            "Check destination MAC addresses in ARP messages.";
+          ext:support-filter "false";
+        }
+        leaf srcMacCheck {
+          type boolean;
+          default "false";
+          description
+            "Check source MAC addresses in ARP messages.";
+          ext:support-filter "false";
+        }
+        leaf distriEnable {
+          type boolean;
+          default "false";
+          description
+            "Enable Or Disable Distribute-gateway";
+        }
+        leaf arpGratuitous {
+          type arpGratuitousSend;
+          default "according-global";
+          description
+            "Enable Or Disable sending gratuitous-arp packet on Interface.";
+        }
+        leaf arpGratuitousInterval {
+          when "../arpGratuitous='true'";
+		  type uint32 {
+            range "1..86400";
+          }
+          default "60";
+          description
+            "The interval of sending gratuitous-arp packet on Interface.";
+        }
+        leaf hostCollectEnable {
+          type boolean;
+          default "false";
+          description
+            "Status of the Host Information Collection Function.";
+        }
+        leaf importPolicy {
+          type arpImportPolicy;
+          default "None";
+          description
+            "The controller generates a ARP list item is not trusted, can be covered.";
+          ext:support-filter "false";
+        }
+        container arpDualSendIntf {
+          description
+            "AP ARP Dual-Sending Packet";
+          leaf arpDualEnable {
+            type boolean;
+            default "false";
+            description
+              "Enbale AP ARP Dual-Sending Packet";
+            ext:allowDelete "true";
+          }
+        }
+        leaf fastDelete {
+          type boolean;
+          default "false";
+          description
+            "Enbale ARP Delete Trigger Link-down";
+        }
+        leaf ifArpCheckType {
+          type arpFixType;
+          default "NoFix";
+          description
+            "Mode of fixed ARP on an interface.";
+        }
+        leaf ifGratuitousArpDrop {
+          type boolean;
+          default "false";
+          description
+            "Enable an interface to discard gratuitous ARP packets.";
+        }
+        leaf l2ProxyUserIsoEnable {
+          type boolean;
+          default "false";
+          description
+            "Configuration of a user-isolate interface.";
+        }
+        leaf mffPortType {
+          type arpMffPortType;
+          default "No-config";
+          description
+            "MFF interface functions.";
+        }
+        leaf realExpireTime {
+          type uint32 {
+            range "60..86400";
+          }
+          config false;
+          description
+            "Real aging time of a dynamic ARP entry.";
+        }
+        leaf anywayProxyEnable {
+          type boolean;
+          default "false";
+          description
+            "Enable anyway proxy ARP. When two hosts reside on different network segments and do not have default gateways configured, IP address resolution between the two hosts can be implemented using anyway proxy ARP.";
+        }
+      }
+    }
+    container arpIfLimits {
+      description
+        "Maximum number of dynamic ARP entries that an interface can learn.";
+      list arpIfLimit {
+        key "ifName vlanId";
+        description
+          "Maximum number of dynamic ARP entries that an interface can learn. If the number of ARP entries that an interface can learn changes and the number of the learned ARP entries exceeds the changed value, the interface cannot learn additional ARP entries. The system prompts you to delete the excess ARP entries.";
+        leaf ifName {
+          type leafref {
+            path "/ifm:ifm/ifm:interfaces/ifm:interface/ifm:ifName";
+          }
+          description
+            "Name of the interface where the number of dynamic ARP entries that can be learned is configured. ";
+          ext:support-filter "true";
+        }
+        leaf vlanId {
+          type uint16 {
+            range "0..4094";
+          }
+          description
+            "ID of the VLAN where ARP learning is restricted. This parameter can be set only on Layer 2 interfaces and sub-interfaces. Ethernet, GE, VE, and Eth-Trunk interfaces can be both Layer 3 and Layer 2 interfaces. When they work in Layer 3 mode, they cannot have VLANs configured. When they work in Layer 2 mode, they must have VLANs configured. Ethernet, GE, and Eth-Trunk sub-interfaces can be both common and QinQ sub-interfaces. ";
+        }
+        leaf limitNum {
+          type uint32 {
+            range "1..65536";
+          }
+          mandatory true;
+          description
+            "Maximum number of dynamic ARP entries that an interface can learn.";
+        }
+        leaf learnedNum {
+          type uint32 {
+            range "0..65536";
+          }
+          config false;
+          description
+            "Number of ARP entries that an interface has already learned.";
+          ext:support-filter "false";
+        }
+        leaf threValue {
+          type uint32 {
+            range "60..100";
+          }
+          must "not(not(../limitNum))";
+          default "80";
+          description
+            "Alarm-Threshold for Maximum number of ARP entries that an interface can learn.";
+          ext:allowDelete "true";
+        }
+      }
+    }
+    container arpStatusDetects {
+      description
+        "ARP Entry Status Detects.";
+      list arpStatusDetect {
+        key "ifName";
+        description
+          "ARP Entry Status Detect.";
+        leaf ifName {
+          type leafref {
+            path "/ifm:ifm/ifm:interfaces/ifm:interface/ifm:ifName";
+          }
+          description
+            "Interface Name. ";
+          ext:support-filter "true";
+        }
+        leaf detectMode {
+          type boolean;
+          default "false";
+          description
+            "Detect Mode(true: loose mode; false: strict mode).";
+        }
+        leaf detectTimes {
+          type uint8 {
+            range "1..10";
+          }
+          default "3";
+          description
+            "Detect Times.";
+        }
+        leaf detectInterval {
+          type uint32 {
+            range "200..10000";
+          }
+          default "1000";
+          description
+            "Detect Interval.";
+        }
+        leaf detectIpAddr {
+          type inet:ipv4-address-no-zone;
+          mandatory true;
+          description
+            "Detect IP.";
+        }
+      }
+    }
+    container arpSpeedLimits {
+      description
+        "Timestamp suppression rate at which an interface board suppresses ARP messages.";
+      list arpSpeedLimit {
+        key "slotId suppressType ipType";
+        description
+          "Timestamp suppression rate at which an interface board suppresses ARP messages.";
+        ext:entry-from "system";
+        leaf slotId {
+          type string {
+            length "1..24";
+          }
+          description
+            "Slot ID.";
+        }
+        leaf suppressType {
+          type arpSuppType;
+          description
+            "Suppression type. The available options are ARP and ARP Miss.";
+        }
+        leaf ipType {
+          type arpSuppIpType;
+          description
+            "Suppression type based on IP addresses. The available options are destination-IP-based suppression and source-IP-based suppression. Destination-IP-based suppression maps to ARP suppression. Source-IP-based suppression maps to ARP Miss suppression.";
+        }
+        leaf suppressValue {
+          type uint32 {
+            range "0..65536";
+          }
+          mandatory true;
+          description
+            "Number of ARP messages or ARP Miss messages that an interface can process in a specified period.";
+        }
+      }
+    }
+    container arpGlobalSpeedLimits {
+      description
+        "Timestamp suppression rate at which a device suppresses ARP messages.";
+      list arpGSpeedLimit {
+        key "gSuppressType gIpType";
+        description
+          "Timestamp suppression rate at which a device suppresses ARP messages.";
+        ext:entry-from "system";
+        leaf gSuppressType {
+          type arpSuppType;
+          must "((../gSuppressType='ARP-miss') and (../gIpType='Src_Ip')) or ((../gSuppressType='ARP') and (../gIpType='Dest_Ip')) or ((../gSuppressType='ARP') and (../gIpType='Global_Port'))";
+          description
+            "Suppression type. The available options are ARP and ARP Miss.";
+        }
+        leaf gIpType {
+          type arpSuppIpType;
+          must "((../gSuppressType='ARP-miss') and (../gIpType='Src_Ip')) or ((../gSuppressType='ARP') and (../gIpType='Dest_Ip')) or ((../gSuppressType='ARP') and (../gIpType='Global_Port'))";
+          description
+            "Suppression type based on IP addresses. The available options are destination-IP-based suppression and source-IP-based suppression. Destination-IP-based suppression maps to ARP suppression. Source-IP-based suppression maps to ARP Miss suppression.";
+        }
+        leaf gPortType {
+          type arpSuppPortType;
+          default "SrcPort";
+          description
+            "Suppression type based on Port. ";
+          ext:allowDelete "true";
+        }
+        leaf gSuppressValue {
+          type uint32 {
+            range "0..65536";
+          }
+          mandatory true;
+          description
+            "Number of ARP messages or ARP Miss messages that a device can process in a specified period.";
+        }
+      }
+    }
+    container arpIPPools {
+      description
+        "List of IP address pools based on sub-VLANs.";
+      list arpIPPool {
+        key "vlanId";
+        description
+          "IP address pool based on sub-VLANs.";
+        leaf vlanId {
+          type leafref {
+            path "/vlan:vlan/vlan:vlans/vlan:vlan/vlan:vlanId";
+          }
+          description
+            "VLAN ID of an address pool, which can only be the ID of a sub-VLAN.";
+        }
+        leaf ipBegin {
+          type inet:ipv4-address-no-zone ;
+          must "not(../ipBegin) and not(../ipEnd) and not(../ipBegin=../ipEnd)";
+          mandatory true;
+          description
+            "Start IP address.";
+        }
+        leaf ipEnd {
+          type inet:ipv4-address-no-zone;
+          must "not(../ipBegin) and not(../ipEnd) and not(../ipBegin=../ipEnd)";
+          description
+            "End IP address.";
+        }
+      }
+    }
+    container arpStatisticss {
+      config false;
+      description
+        "List of ARP packet statistics.";
+      list arpStatistics {
+        key "slotId";
+        config false;
+        description
+          "ARP packet statistics. ARP statistics on all boards are displayed in sequence.";
+        leaf slotId {
+          type string {
+            length "1..24";
+          }
+          config false;
+          description
+            "Slot ID.";
+        }
+        leaf pktReceived {
+          type uint32 {
+            range "0..4294967294";
+          }
+          config false;
+          description
+            "Number of received ARP packets.";
+          ext:support-filter "false";
+        }
+        leaf missReceived {
+          type uint32 {
+            range "0..4294967294";
+          }
+          config false;
+          description
+            "Number of received ARP Miss packets.";
+          ext:support-filter "false";
+        }
+        leaf arpLearnCount {
+          type uint32 {
+            range "0..4294967294";
+          }
+          config false;
+          description
+            "Number of learned ARP entries.";
+          ext:support-filter "false";
+        }
+        leaf pktDropLimit {
+          type uint32 {
+            range "0..4294967294";
+          }
+          config false;
+          description
+            "Number of the ARP packets discarded due to restriction.";
+          ext:support-filter "false";
+        }
+        leaf pktDropOther {
+          type uint32 {
+            range "0..4294967294";
+          }
+          config false;
+          description
+            "Number of ARP packets discarded due to other reasons.";
+          ext:support-filter "false";
+        }
+        leaf missDropLimit {
+          type uint32 {
+            range "0..4294967294";
+          }
+          config false;
+          description
+            "Number of ARP Miss packets discarded due to restriction.";
+          ext:support-filter "false";
+        }
+        leaf missDropOther {
+          type uint32 {
+            range "0..4294967294";
+          }
+          config false;
+          description
+            "Number of ARP Miss packets discarded due to other reasons.";
+          ext:support-filter "false";
+        }
+        leaf pktDropSpeedLmt {
+          type uint32 {
+            range "0..4294967294";
+          }
+          config false;
+          description
+            "Number of ARP packets discarded due to a rate limit.";
+          ext:support-filter "false";
+        }
+        leaf pktProxySupp {
+          type uint32 {
+            range "0..4294967294";
+          }
+          config false;
+          description
+            "Number of ARP packets discarded because of proxy suppression.";
+          ext:support-filter "false";
+        }
+      }
+    }
+    container arpIfStats {
+      config false;
+      description
+        "List of ARP statistics on interfaces.";
+      list arpIfStat {
+        key "ifName";
+        config false;
+        description
+          "ARP statistics on interfaces. ARP statistics on all interfaces are displayed in sequence.";
+        leaf ifName {
+          type leafref {
+            path "/ifm:ifm/ifm:interfaces/ifm:interface/ifm:ifName";
+          }
+          config false;
+          description
+            "Name of an interface where ARP statistics to be displayed reside.";
+          ext:support-filter "true";
+        }
+        leaf rcvReqPkt {
+          type uint32 {
+            range "0..4294967294";
+          }
+          config false;
+          description
+            "Number of ARP request messages received.";
+          ext:support-filter "false";
+        }
+        leaf rcvRplyPkt {
+          type uint32 {
+            range "0..4294967294";
+          }
+          config false;
+          description
+            "Number of ARP reply messages received.";
+          ext:support-filter "false";
+        }
+        leaf rcvGratisPkt {
+          type uint32 {
+            range "0..4294967294";
+          }
+          config false;
+          description
+            "Number of gratuitous ARP messages received.";
+          ext:support-filter "false";
+        }
+        leaf sndReqPkt {
+          type uint32 {
+            range "0..4294967294";
+          }
+          config false;
+          description
+            "Number of ARP request messages sent.";
+          ext:support-filter "false";
+        }
+        leaf sndRplyPkt {
+          type uint32 {
+            range "0..4294967294";
+          }
+          config false;
+          description
+            "Number of ARP reply messages sent.";
+          ext:support-filter "false";
+        }
+        leaf sndGratisPkt {
+          type uint32 {
+            range "0..4294967294";
+          }
+          config false;
+          description
+            "Number of gratuitous ARP messages sent.";
+          ext:support-filter "false";
+        }
+        leaf arpExceedFlag {
+          type boolean;
+          default "false";
+          config false;
+          description
+            "Flag indicating that the number of ARP entries exceeds the specification of an interface.";
+          ext:support-filter "false";
+        }
+        leaf arpBatchState {
+          type arpBatchType;
+          default "Real";
+          config false;
+          description
+            "The arp batch state of Interface ";
+          ext:support-filter "false";
+        }
+      }
+    }
+    container arpIfErrPkts {
+      config false;
+      description
+        "List of ARP error packet information.";
+      list arpIfErrPkt {
+        key "slotId sequence";
+        config false;
+        description
+          "ARP error packet on an interface.";
+        leaf slotId {
+          type string {
+            length "1..24";
+          }
+          config false;
+          description
+            "Slot ID of the board that received the ARP error packet.";
+          ext:support-filter "true";
+        }
+        leaf sequence {
+          type uint32 {
+            range "1..10";
+          }
+          config false;
+          description
+            "Sequence number of the received ARP error packet on each board.";
+          ext:support-filter "true";
+        }
+        leaf ifName {
+          type pub-type:ifName;
+          config false;
+          description
+            "Name of an interface.";
+          ext:support-filter "false";
+        }
+        leaf rcvTime {
+          type yang:date-and-time;
+          config false;
+          description
+            "Time when an ARP error packet was received.";
+          ext:support-filter "false";
+        }
+        leaf rcvContent {
+          type string {
+            length "1..255";
+          }
+          config false;
+          mandatory true;
+          description
+            "Content of the received ARP error packet, including ARP header, the source MAC address, the source IP address, the destination MAC address, and the destination IP address.";
+        }
+      }
+    }
+    container arpEntryStatisticss {
+      config false;
+      description
+        "List of ARP entry statistics.";
+      list arpEntryStatistics {
+        key "slotId";
+        config false;
+        description
+          "ARP entry statistics. ARP entry statistics on all boards are displayed in sequence.";
+        leaf slotId {
+          type string {
+            length "1..24";
+          }
+          config false;
+          description
+            "Slot ID.";
+        }
+        leaf dynamicARPNum {
+          type uint32 {
+            range "0..4294967294";
+          }
+          config false;
+          description
+            "Number of dynamic ARP entries.";
+          ext:support-filter "false";
+        }
+        leaf staticARPNum {
+          type uint32 {
+            range "0..4294967294";
+          }
+          config false;
+          description
+            "Number of static ARP entries.";
+          ext:support-filter "false";
+        }
+        leaf remoteARPNum {
+          type uint32 {
+            range "0..4294967294";
+          }
+          config false;
+          description
+            "Number of remote backup ARP entries.";
+          ext:support-filter "false";
+        }
+        leaf redirectARPNum {
+          type uint32 {
+            range "0..4294967294";
+          }
+          config false;
+          description
+            "Number of remote redirect ARP entries.";
+          ext:support-filter "false";
+        }
+        leaf arpExceedFlag {
+          type boolean;
+          default "false";
+          config false;
+          description
+            "Flag indicating that the number of ARP entries exceeds the specification of a board.";
+          ext:support-filter "false";
+        }
+      }
+    }
+    container arpBds {
+      description
+        "List of ARP Bridge-domain configurations.";
+      list arpBd {
+        key "bdId";
+        description
+          "ARP Bridge-domain configuration.";
+        ext:entry-from "system";
+        leaf bdId {
+          type leafref {
+            path "/evc:evc/evc:bds/evc:bd/evc:bdId";
+          }
+          description
+            "Bridge-domain ID.";
+        }
+        leaf arpL2ProxyEnable {
+          type boolean;
+          default "false";
+          description
+            "Enable Or Disable L2 Proxy. ";
+        }
+        leaf arpBroadcastSuppEnable {
+          type boolean;
+          default "false";
+          description
+            "Enable Or Disable ARP broadcast suppress. ";
+        }
+        leaf arpL2ProxyExpireTime {
+          when "../arpL2ProxyEnable='true'";
+          type uint32 {
+            range "1..62640";
+          }
+          default "900";
+          description
+            "Set l2 proxy expire-Time.";
+          ext:allowDelete "true";
+        }
+        leaf arpCollectHostEnable {
+          when "../arpL2ProxyEnable='true'";
+          type boolean;
+          default "false";
+          description
+            "Enable or disable l2 proxy collect-host";
+        }
+        leaf arpL2ProxyGWEnable {
+          when "not(../arpL2ProxyEnable='true') or ../arpL2ProxyEnable='false'";
+          type boolean;
+          default "false";
+          description
+            "Enable  Or Disable L2 Proxy Gateway-mac";
+        }
+        leaf arpBroadcastDiscardEnable {
+          type boolean;
+          default "false";
+          description
+            "Enable Or Disable ARP  Broadcast Suppress Mismatch-discard";
+        }
+      }
+    }
+    container arpBdTables {
+      config false;
+      description
+        "List of ARP Broadcast-suppress User Information.";
+      list arpBdTable {
+        key "bdId";
+        config false;
+        description
+          "ARP Broadcast-suppress User Info";
+        leaf bdId {
+          type uint32 {
+            range "1..16777215";
+          }
+          config false;
+          description
+            "Bridge-domain ID.";
+        }
+        leaf ipAddr {
+          type inet:ipv4-address-no-zone;
+          config false;
+          description
+            "IP address, in dotted decimal notation.";
+        }
+        leaf macAddr {
+          type pub-type:macAddress;
+          config false;
+          description
+            "MAC address in the format of H-H-H, in which H is a hexadecimal number of 1 to 4 bits. ";
+        }
+        leaf vtep {
+          type inet:ipv4-address-no-zone;
+          config false;
+          description
+            "Vtep ip";
+        }
+        leaf flag {
+          type string {
+            length "1..24";
+          }
+          config false;
+          description
+            "flags";
+        }
+      }
+    }
+    container arpOpenFlowTables {
+      config false;
+      description
+        "arpOpenFlowTables";
+      list arpOpenFlowTable {
+        key "vni ipAddr";
+        config false;
+        description
+          "arpOpenFlowTable";
+        leaf vni {
+          type uint32 {
+            range "1..16000000";
+          }
+          config false;
+          description
+            "Vxlan VNI";
+        }
+        leaf ipAddr {
+          type inet:ipv4-address-no-zone;
+          config false;
+          description
+            "IP address, in dotted decimal notation.";
+        }
+        leaf macAddr {
+          type pub-type:macAddress;
+          config false;
+          description
+            "MAC address in the format of H-H-H, in which H is a hexadecimal number of 1 to 4 bits. ";
+        }
+        leaf vtepIp {
+          type inet:ipv4-address-no-zone;
+          config false;
+          description
+            "vtepIp";
+        }
+      }
+    }
+    container arpDupMacTables {
+      config false;
+      description
+        "ARP DupMacTables";
+      list arpDupMacTable {
+        key "macAddr bridgeType bridgeId";
+        config false;
+        description
+          "ARP DupMacTable";
+        leaf ifName {
+          type pub-type:ifName;
+          config false;
+          description
+            "Name of the interface that has received dup ARP.";
+          ext:support-filter "true";
+        }
+        leaf ipAddr {
+          type inet:ipv4-address-no-zone;
+          config false;
+          description
+            "IP address, in dotted decimal notation.";
+        }
+        leaf macAddr {
+          type pub-type:macAddress;
+          config false;
+          description
+            "MAC address in the format of H-H-H, in which H is a hexadecimal number of 1 to 4 bits. ";
+        }
+        leaf agingTime {
+          type uint32 {
+            range "1..180";
+          }
+          config false;
+          description
+            "ExpireTime of dupmac record";
+        }
+        leaf bridgeType {
+          type arpBridgeType;
+          config false;
+          description
+            "bridgeType.";
+          ext:support-filter "true";
+        }
+        leaf bridgeId {
+          type uint32 {
+            range "1..16777215";
+          }
+          config false;
+          description
+            "bridgeID.";
+          ext:support-filter "true";
+        }
+        leaf vni {
+          type uint32 {
+            range "1..16777215";
+          }
+          config false;
+          description
+            "Vxlan VNI";
+        }
+        leaf sourceAddr {
+          type inet:ip-address-no-zone;
+          config false;
+          description
+            "Tunnel  SourceIPAddr.";
+        }
+        leaf peerAddr {
+          type inet:ip-address-no-zone;
+          config false;
+          description
+            "Tunnel  DestIPAddr.";
+        }
+        leaf srcV6Addr {
+          type inet:ipv6-address-no-zone;
+          config false;
+          description
+            "Tunnel  SourceIPv6Addr";
+        }
+        leaf peerV6Addr {
+          type inet:ipv6-address-no-zone;
+          config false;
+          description
+            "Tunnel  DestIPv6Addr";
+        }
+      }
+    }
+    container arpFailTables {
+      config false;
+      description
+        "ARP FailTables";
+      list arpFailTable {
+        key "ifName";
+        config false;
+        description
+          "ARP FailTable";
+        leaf ifName {
+          type leafref {
+            path "/ifm:ifm/ifm:interfaces/ifm:interface/ifm:ifName";
+          }
+          config false;
+          description
+            "Name of the interface";
+          ext:support-filter "true";
+        }
+        leaf ipAddr {
+          type inet:ipv4-address-no-zone;
+          config false;
+          description
+            "IP address, in dotted decimal notation.";
+        }
+        leaf vrfName {
+          type pub-type:vrfName;
+          config false;
+          description
+            "VRF Name";
+          ext:support-filter "true";
+        }
+        leaf vlan {
+          type uint16 {
+            range "1..4094";
+          }
+          config false;
+          description
+            "vlan";
+        }
+        leaf lastTime {
+          type yang:date-and-time;
+          config false;
+          description
+            "lasttime";
+        }
+        leaf arpType {
+          type string;
+          config false;
+          description
+            "ARP type, including UNI and NNI.";
+        }
+        leaf slotId {
+          type string;
+          config false;
+          description
+            "Slot ID of the board that received the ARP Miss packet.";
+        }
+      }
+    }
+    container arpVlanSecurityTables {
+      description
+        "ARP VLAN security configuration list.";
+      list arpVlanSecurityTable {
+        key "vlanId";
+        description
+          "ARP security configuration.";
+        ext:entry-from "system";
+        leaf vlanId {
+          type leafref {
+            path "/vlan:vlan/vlan:vlans/vlan:vlan/vlan:vlanId";
+          }
+          description
+            "VLAN ID.";
+        }
+        container arpUserBindingCheckTable {
+          description
+            "Check items of ARP binding table matching check in a VLAN.";
+          leaf checkTypeIf {
+            type boolean;
+            default "true";
+            description
+              "Check of interface information during ARP binding table matching check.";
+            ext:allowDelete "true";
+          }
+          leaf checkTypeIp {
+            type boolean;
+            default "true";
+            description
+              "Check of the IP address during ARP binding table matching check.";
+            ext:allowDelete "true";
+          }
+          leaf checkTypeMac {
+            type boolean;
+            default "true";
+            description
+              "Check of the MAC address during ARP binding table matching check.";
+            ext:allowDelete "true";
+          }
+        }
+        leaf daiEnable {
+          type boolean;
+          default "false";
+          description
+            "Enable the dynamic ARP probe function.";
+          ext:allowDelete "true";
+        }
+        leaf l2ProxyEnable {
+          type boolean;
+          must "not(../dhcpSnoopSecEnable='true')";
+          default "false";
+          description
+            "Enable Layer 2 ARP proxy.";
+          ext:allowDelete "true";
+        }
+        leaf l2ProxyExpireTime {
+          when "../l2ProxyEnable='true'";
+          type uint32 {
+            range "1..62640";
+          }
+          default "900";
+          description
+            "Aging time for Layer 2 proxy ARP entries.";
+          ext:allowDelete "true";
+        }
+        leaf l2ProxyLearnDynUser {
+          when "../l2ProxyEnable='true'";
+          type boolean;
+          default "true";
+          description
+            "Enable dynamic ARP learning of Layer 2 proxy ARP.";
+          ext:allowDelete "true";
+        }
+        leaf l2ProxyMaxUserNum {
+          when "../l2ProxyEnable='true'";
+          type uint32 {
+            range "1..32768";
+          }
+          default "2000";
+          description
+            "Maximum number of ARP entries allowed for Layer 2 proxy ARP.";
+          ext:allowDelete "true";
+        }
+        leaf dhcpSnoopSecEnable {
+          type boolean;
+          must "not(../l2ProxyEnable='true')";
+          default "false";
+          description
+            "Enable the egress ARP inspection function.";
+          ext:allowDelete "true";
+        }
+      }
+    }
+    container arpVlanRateLimitTables {
+      description
+        "Rate limit for ARP packets in a VLAN configuration.";
+      list arpVlanRateLimitTable {
+        key "vlanId vlanSuppType";
+        description
+          "Rate limit for ARP packets in a VLAN configuration list.";
+        ext:entry-from "system";
+        leaf vlanId {
+          type leafref {
+            path "/vlan:vlan/vlan:vlans/vlan:vlan/vlan:vlanId";
+          }
+          description
+            "VLAN ID.";
+        }
+        leaf vlanSuppType {
+          type arpSuppType;
+          description
+            "Type of ARP suppression for attack defense in a VLAN.";
+        }
+        leaf vlanSuppValue {
+          type uint32 {
+            range "0..65536";
+          }
+          default "0";
+          description
+            "ARP suppression threshold for attack defense in a VLAN. ";
+          ext:allowDelete "true";
+        }
+      }
+    }
+    container arpMffVlanCfgs {
+      description
+        "List of MFF configurations.";
+      list arpMffVlanCfg {
+        key "vlanId";
+        description
+          "MFF configurations, including VLAN ID, gateway probe, dynamic ARP learning, maximum number of dynamic users, servers, static gateway address, and online user detection.";
+        ext:entry-from "system";
+        leaf vlanId {
+          type leafref {
+            path "/vlan:vlan/vlan:vlans/vlan:vlan/vlan:vlanId";
+          }
+          must "(../../../arpSystemInfo/gMffEnable='true')";
+          description
+            "VLAN ID of an MFF";
+        }
+        leaf isMffEnable {
+          type boolean;
+          default "false";
+          description
+            "Enable the MFF function.";
+        }
+        leaf gatewayDetectEnable {
+          type boolean;
+          must "not(../isMffEnable='false')";
+          default "false";
+          description
+            "Enable the timed gateway detection function.";
+        }
+        leaf learnDynUserEnable {
+          type boolean;
+          must "not(../isMffEnable='false')";
+          default "true";
+          description
+            "Enable dynamic ARP learning.";
+        }
+        leaf maxUserNum {
+          type uint32 {
+            range "10..2000";
+          }
+          must "not(../isMffEnable='false')";
+          description
+            "Configuration of the maximum number of users allowed in a VLAN.";
+          ext:allowDelete "true";
+        }
+        leaf staticGatewayIpAddr {
+          type inet:ipv4-address-no-zone;
+          must "not(../isMffEnable='false')";
+          description
+            "Configuration of the IP address of a static gateway in a VLAN.";
+          ext:allowDelete "true";
+        }
+        leaf userDetectTransEnable {
+          type boolean;
+          must "not(../isMffEnable='false')";
+          default "false";
+          description
+            "Enable the function to transparently transmit ARP request packets.";
+        }
+        container mffServerIps {
+          description
+            "Server configuration list.";
+          list mffServerIp {
+            when "not(../../isMffEnable='false') or ../../isMffEnable='true'";
+            key "mffServerIp";
+            description
+              "Server configuration.";
+            leaf mffServerIp {
+              type inet:ipv4-address-no-zone;
+              description
+                "Configuration of a server IP address in a network.";
+            }
+          }
+        }
+      }
+    }
+    container arpIpConflictStats {
+      config false;
+      description
+        "List of statistics about conflicting IP addresses detected by ARP.";
+      list arpIpConflictStat {
+        key "ipAddr conflictType sysTime conflictCnt localIfName";
+        config false;
+        description
+          "Statistics about conflicting IP addresses detected by ARP.";
+        leaf ipAddr {
+          type inet:ipv4-address-no-zone;
+          config false;
+          description
+            "Conflicting IP address.";
+        }
+        leaf conflictType {
+          type arpIpConflictType;
+          config false;
+          description
+            "IP address conflict type.";
+        }
+        leaf sysTime {
+          type yang:date-and-time;
+          config false;
+          description
+            "Date and time when an IP address conflict occurred.";
+        }
+        leaf slotId {
+          type string {
+            length "1..24";
+          }
+          config false;
+          description
+            "Slot ID.";
+          ext:support-filter "true";
+        }
+        leaf conflictCnt {
+          type uint32 {
+            range "0..4294967294";
+          }
+          config false;
+          description
+            "Number of IP address conflicts.";
+        }
+        leaf suppressCnt {
+          type uint32 {
+            range "0..4294967294";
+          }
+          config false;
+          description
+            "Number of times that conflicting IP addresses are suppressed.";
+        }
+        leaf localIfName {
+          type leafref {
+            path "/ifm:ifm/ifm:interfaces/ifm:interface/ifm:ifName";
+          }
+          config false;
+          description
+            "Interface where the conflicting IP address resides.";
+        }
+        leaf recvIfName {
+          type pub-type:ifName;
+          config false;
+          description
+            "Interface on which an ARP packet is received when an IP address conflict occurs.";
+        }
+        leaf localVlan {
+          type uint16 {
+            range "0..4094";
+          }
+          config false;
+          description
+            "VLAN that corresponds to the conflicting IP address.";
+        }
+        leaf localCeVlan {
+          type uint16 {
+            range "0..4094";
+          }
+          config false;
+          description
+            "Outer VLAN that corresponds to the conflicting IP address.";
+        }
+        leaf recvVlan {
+          type uint16 {
+            range "0..4094";
+          }
+          config false;
+          description
+            "VLAN carried in a received ARP packet when an IP address conflict occurs.";
+        }
+        leaf recvCeVlan {
+          type uint16 {
+            range "0..4094";
+          }
+          config false;
+          description
+            "Outer VLAN carried in a received ARP packet when an IP address conflict occurs.";
+        }
+        leaf localMac {
+          type pub-type:macAddress;
+          config false;
+          description
+            "MAC address of an interface.";
+        }
+        leaf recvMac {
+          type pub-type:macAddress;
+          config false;
+          description
+            "Source MAC address carried in a received ARP packet when an IP conflict occurs.";
+        }
+        leaf hSrcMac {
+          type pub-type:macAddress;
+          config false;
+          description
+            "Source MAC address carried in the Ethernet header of a received ARP packet.";
+        }
+        leaf hDstMac {
+          type pub-type:macAddress;
+          config false;
+          description
+            "Destination MAC address carried in the Ethernet header of a received ARP packet.";
+        }
+      }
+    }
+    container arpTrackStats {
+      config false;
+      description
+        "List of ARP track statistics.";
+      list arpTrackStat {
+        key "opCode ipAddr vlanId oldIfName newIfName sysTime";
+        config false;
+        description
+          "ARP track statistics.";
+        leaf opCode {
+          type arpTrackOpCodeType;
+          config false;
+          description
+            "Type of an operation.";
+        }
+        leaf ipAddr {
+          type inet:ipv4-address-no-zone;
+          config false;
+          description
+            "IP address.";
+        }
+        leaf vlanId {
+          type leafref {
+            path "/vlan:vlan/vlan:vlans/vlan:vlan/vlan:vlanId";
+          }
+          config false;
+          description
+            "VLAN ID.";
+        }
+        leaf macAddr {
+          type pub-type:macAddress;
+          config false;
+          description
+            "MAC address.";
+        }
+        leaf oldIfName {
+          type leafref {
+            path "/ifm:ifm/ifm:interfaces/ifm:interface/ifm:ifName";
+          }
+          config false;
+          description
+            "Old interface name.";
+        }
+        leaf newIfName {
+          type leafref {
+            path "/ifm:ifm/ifm:interfaces/ifm:interface/ifm:ifName";
+          }
+          config false;
+          description
+            "New interface name.";
+        }
+        leaf sysTime {
+          type yang:date-and-time;
+          config false;
+          description
+            "Date and time when an IP address conflict is recorded.
+";
+        }
+      }
+    }
+    container arpCacheEvnStats {
+      config false;
+      description
+        "List of statistics about cached ARP entries of a specified EVN instance.";
+      list arpCacheEvnStat {
+        key "evnName vlanId ipAddr";
+        config false;
+        description
+          "Statistics about cached ARP entries of a specified EVN instance.";
+        leaf evnName {
+          type string {
+            length "1..31";
+          }
+          config false;
+          description
+            "EVN instance name.";
+        }
+        leaf vlanId {
+          type leafref {
+            path "/vlan:vlan/vlan:vlans/vlan:vlan/vlan:vlanId";
+          }
+          config false;
+          description
+            "VLAN ID.";
+        }
+        leaf ipAddr {
+          type inet:ipv4-address-no-zone;
+          config false;
+          description
+            "IP address.";
+        }
+        leaf macAddr {
+          type pub-type:macAddress;
+          config false;
+          description
+            "MAC address.";
+        }
+        leaf ifName {
+          type pub-type:ifName;
+          config false;
+          description
+            "Interface name.";
+        }
+        leaf agingTime {
+          type uint32 {
+            range "0..4294967294";
+          }
+          config false;
+          description
+            "Aging time (min).";
+        }
+      }
+    }
+    container arpBdStatisticss {
+      config false;
+      description
+        "List of ARP bridge domain packet statistics.";
+      list arpBdStatistics {
+        key "bdId";
+        config false;
+        description
+          "ARP bridge domain packet statistics.";
+        leaf bdId {
+          type leafref {
+            path "../../../arpBds/arpBd/bdId";
+          }
+          config false;
+          description
+            "Bridge domain ID.";
+        }
+        leaf rcvReqPkt {
+          type uint32;
+          config false;
+          description
+            "Number of ARP request packets received in a BD of a Layer 2 service.";
+        }
+        leaf rcvGratisPkt {
+          type uint32;
+          config false;
+          description
+            "Number of gratuitous ARP packets received in a BD of a Layer 2 service.";
+        }
+        leaf rcvProxyPkt {
+          type uint32;
+          config false;
+          description
+            "Number of proxy ARP packets received in a BD of a Layer 2 service.";
+        }
+        leaf recvReply {
+          type uint32;
+          config false;
+          description
+            "Number of ARP reply packets received in a BD of a Layer 2 service.";
+        }
+        leaf rcvMisDisc {
+          type uint32;
+          config false;
+          description
+            "Number of packets discarded due to ARP broadcast suppression.";
+        }
+        leaf rcvDiscOther {
+          type uint32;
+          config false;
+          description
+            "Number of packets discarded due to reasons other than ARP broadcast suppression.";
+        }
+        leaf rcvTotalPkt {
+          type uint32;
+          config false;
+          description
+            "Total number of received ARP packets in a BD of a Layer 2 service.";
+        }
+        leaf sndUnicastPkt {
+          type uint32;
+          config false;
+          description
+            "Number of sent unicast ARP packets in a BD of a Layer 2 service.";
+        }
+        leaf sndBroadcastPkt {
+          type uint32;
+          config false;
+          description
+            "Number of sent broadcast ARP packets in a BD of a Layer 2 service (excluding gratuitous ARP and proxy ARP packets).";
+        }
+        leaf sndGratisPkt {
+          type uint32;
+          config false;
+          description
+            "Number of sent gratuitous ARP packets in a BD of a Layer 2 service.";
+        }
+        leaf sndProxyPkt {
+          type uint32;
+          config false;
+          description
+            "Number of sent proxy ARP packets in a BD of a Layer 2 service.";
+        }
+        leaf l2ProxyReply {
+          type uint32;
+          config false;
+          description
+            "Number of sent proxy ARP packets in a BD of a Layer 2 service.";
+        }
+        leaf sndTotalPkt {
+          type uint32;
+          config false;
+          description
+            "Total number of sent ARP packets in a BD of a Layer 2 service.";
+        }
+      }
+    }
+    container arpMffStatisticss {
+      config false;
+      description
+        "List of MFF statistics.";
+      list arpMffStatistics {
+        key "vlanId gatewayIpAddr";
+        config false;
+        description
+          "MFF information, including VLAN ID, gateway IP address, gateway MAC address, user IP address, user MAC address, interface, and user type.";
+        leaf vlanId {
+          type leafref {
+            path "/vlan:vlan/vlan:vlans/vlan:vlan/vlan:vlanId";
+          }
+          config false;
+          description
+            "VLAN ID.";
+        }
+        leaf gatewayIpAddr {
+          type inet:ipv4-address-no-zone;
+          config false;
+          description
+            "Gateway IP address.";
+        }
+        leaf gatewayMacAddr {
+          type pub-type:macAddress;
+          config false;
+          description
+            "Gateway MAC address.";
+        }
+        container userInfos {
+          config false;
+          description
+            "List of MFF user information.";
+          list userInfo {
+            key "userIpAddr gatewayIpAddr";
+            config false;
+            description
+              "MFF user information, including user IP address, user MAC address, interface, and user type.";
+            leaf userIpAddr {
+              type inet:ipv4-address-no-zone;
+              config false;
+              description
+                "IP address of an access user.";
+            }
+            leaf userMacAddr {
+              type string {
+                length "1..15";
+              }
+              config false;
+              description
+                "MAC address of an MFF access user.";
+            }
+            leaf gatewayIpAddr {
+              type inet:ipv4-address-no-zone;
+              config false;
+              description
+                "Gateway IP address.";
+            }
+            leaf ifName {
+              type leafref {
+                path "/ifm:ifm/ifm:interfaces/ifm:interface/ifm:ifName";
+              }
+              config false;
+              description
+                "Name of an interface on which MFF is enabled.";
+            }
+            leaf userType {
+              type arpMffStatFlagType;
+              config false;
+              description
+                "MFF user type.";
+            }
+          }
+        }
+      }
+    }
+    container arpL2ProxyStats {
+      config false;
+      description
+        "List of Layer 2 proxy ARP statistics.";
+      list arpL2ProxyStat {
+        key "vlanId ipAddr";
+        config false;
+        description
+          "Layer 2 proxy ARP statistics.";
+        leaf vlanId {
+          type leafref {
+            path "/vlan:vlan/vlan:vlans/vlan:vlan/vlan:vlanId";
+          }
+          config false;
+          description
+            "VLAN ID.";
+        }
+        leaf ipAddr {
+          type inet:ipv4-address-no-zone ;
+          config false;
+          description
+            "IP address.";
+        }
+        leaf ifName {
+          type leafref {
+            path "/ifm:ifm/ifm:interfaces/ifm:interface/ifm:ifName";
+          }
+          config false;
+          description
+            "Interface name.";
+        }
+        leaf macAddr {
+          type pub-type:macAddress;
+          config false;
+          description
+            "MAC address.";
+        }
+        leaf agingTime {
+          type uint32 {
+            range "1..62640";
+          }
+          config false;
+          description
+            "Aging time (min).";
+        }
+        leaf status {
+          type arpL2ProxyFlagType;
+          config false;
+          description
+            "Layer 2 proxy ARP status.";
+          ext:support-filter "true";
+        }
+      }
+    }
+    container arpAntiAttaStats {
+      config false;
+      description
+        "List of ARP anti-attack statistics.";
+      list arpAntiAttaStat {
+        key "vlanSuppType sourceIpAddr destIpAddr interface attackTime";
+        config false;
+        description
+          "ARP anti-attack statistics.";
+        leaf vlanSuppType {
+          type arpSuppType;
+          config false;
+          description
+            "Type of suppression.";
+        }
+        leaf sourceIpAddr {
+          type inet:ipv4-address-no-zone ;
+          config false;
+          description
+            "Source IP address.";
+        }
+        leaf destIpAddr {
+          type inet:ipv4-address-no-zone ;
+          config false;
+          description
+            "Destination IP address.";
+        }
+        leaf interface {
+          type leafref {
+            path "/ifm:ifm/ifm:interfaces/ifm:interface/ifm:ifName";
+          }
+          config false;
+          description
+            "Interface name.";
+        }
+        leaf attackTime {
+          type yang:date-and-time;
+          config false;
+          description
+            "Time when an attack occurs.";
+        }
+      }
+    }
+  }
+}
